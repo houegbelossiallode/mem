@@ -38,6 +38,8 @@ class VenteDrinkRepository extends ServiceEntityRepository
 //    }
 
 
+
+
         public function getNb()
         {
             $now = new \DateTime();
@@ -69,6 +71,17 @@ class VenteDrinkRepository extends ServiceEntityRepository
                 return $qb;
         }  
 
+        public function search($designation): array
+    {
+        return $this->createQueryBuilder('v')
+            ->select('b.designation','b.Seuil','SUM(v.montant)  AS total','v.quantite_boisson_vendue')
+            ->innerJoin('v.boisson','b')
+            ->Where('b.designation LIKE :designation')
+            ->setParameter('designation', $designation ) 
+            ->getQuery()
+            ->getResult()
+        ;
+    }
         
 //    public function findOneBySomeField($value): ?VenteDrink
 //    {

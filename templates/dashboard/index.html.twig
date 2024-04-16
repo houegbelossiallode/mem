@@ -4,6 +4,8 @@
 {% block pagetitle %}Dashboard{% endblock %}
 {% block body %}
 
+
+{{ include('component/search.html.twig') }}
 <section class="section dashboard">
       <div class="row">
 
@@ -260,9 +262,9 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Reports</h5>
+                  <h5 class="card-title">Evolution de la vente des boissons</h5>
 
-                  
+                  {{ render_chart(chart) }}
 
                 </div>
 
@@ -470,12 +472,10 @@
       
     </section>
 
-  <div class="example-wrapper">
-{{ render_chart(chart) }}
+  
+  
 
-
-</div>
-
+  
 
 {% endblock %}
 
