@@ -1,0 +1,11 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}New Vivre{% endblock %}
+{% block pagetitle %}Nouveau Vivre{% endblock %}
+{% block body %}
+    
+
+    {{ include('vivre/_form.html.twig') }}
+
+    <a href="{{ path('app_vivre_index') }}">back to list</a>
+{% endblock %}

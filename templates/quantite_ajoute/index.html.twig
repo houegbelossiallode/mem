@@ -1,0 +1,52 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}QuantiteAjoute index{% endblock %}
+{% block pagetitle %}Quantité  Ajoutée{% endblock %}
+{% block body %}
+<div class="container-fluid" >
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+<div class="card-body table-responsive">
+<div class="container" >
+
+     <div class="row">
+    <table class="table table-bordered table-striped table-highlight">
+        <thead>
+            <tr>
+                <th>Boisson</th>
+                <th>Quantite ajoutée</th>
+                <th>Quantite sortir</th>
+                <th>Vivre</th>
+                <th>Date</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for quantite_ajoute in quantite_ajoutes %}
+            <tr>
+               
+                <td>
+                {% if quantite_ajoute.magasin.boisson.designation is defined %}
+                {{quantite_ajoute.magasin.boisson.designation }}
+                {% endif %}
+                </td>
+                <td>{{ quantite_ajoute.quantiteAjoutee }}</td>
+                <td>{{ quantite_ajoute.quantiteSortir }}</td>
+                    <td>
+                        {% if quantite_ajoute.vivre.designation is defined %}
+                        {{quantite_ajoute.vivre.designation }}
+                        {% endif %}
+                        </td>
+
+                <td>{{ quantite_ajoute.createdAt ? quantite_ajoute.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

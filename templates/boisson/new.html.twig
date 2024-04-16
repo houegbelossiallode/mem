@@ -1,0 +1,11 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}New Boisson{% endblock %}
+{% block pagetitle %}Créer une nouvelle boisson{% endblock %}
+{% block body %}
+    
+
+    {{ include('boisson/_form.html.twig') }}
+
+    <a href="{{ path('app_boisson_index') }}">Listes des boissons</a>
+{% endblock %}

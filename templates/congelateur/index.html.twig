@@ -1,0 +1,39 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Congelateur index{% endblock %}
+
+{% block body %}
+   
+<div class="container-fluid" >
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+<div class="card-body table-responsive">
+<div class="container" >
+     <div class="row">
+    <table class="table table-bordered table-striped table-highlight">
+        <thead>
+            <tr>
+                <th>Boisson</th>
+                <th>Qte en stock</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for congelateur in congelateurs %}
+            <tr>
+                <td>{{ congelateur.boisson.designation }}</td>
+                <td>{{ congelateur.qteStock }}</td>
+                <td>
+                    <a href="{{ path('app_congelateur_show', {'id': congelateur.id}) }}">show</a>
+                    <a href="{{ path('app_congelateur_edit', {'id': congelateur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

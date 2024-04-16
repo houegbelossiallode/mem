@@ -1,0 +1,12 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Edit Proteine{% endblock %}
+
+{% block body %}
+    <h1>Edit Proteine</h1>
+
+    {{ include('proteine/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_proteine_index') }}">back to list</a>
+
+{% endblock %}

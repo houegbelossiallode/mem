@@ -1,0 +1,40 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Proteine index{% endblock %}
+{% block pagetitle %}Listes des protéines{% endblock %}
+{% block body %}
+        <div class="container-fluid" >
+        <div class="card shadow mb-4">
+        <div class="card-header py-3">
+        <div class="card-body table-responsive">
+        <div class="container" >
+
+        <div class="row">
+        <table class="table table-bordered table-striped table-highlight">
+        <thead>
+            <tr>
+                
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for proteine in proteines %}
+            <tr>
+                
+                <td>{{ proteine.nom }}</td>
+                <td>
+                    <a href="{{ path('app_proteine_edit', {'id': proteine.id}) }}">MODIFIER</a>
+                    <a href="{{ path('app_proteine_delete', {'id': proteine.id}) }}">SUPPRIMER</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_proteine_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}New Repas{% endblock %}
+{% block pagetitle %}Nouveau repas{% endblock %}
+{% block body %}
+    
+
+    {{ include('repas/_form.html.twig') }}
+
+    <a href="{{ path('app_repas_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,29 @@
+
+
+
+<section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+{{ form_start(form) }}
+<div class="row">
+<div class="col-12">{{ form_row(form.boisson) }}</div>
+</div>
+
+<div class="row">
+<div class="col-6">{{ form_row(form.nombre_trou,{ 'label' : 'Nombre de trou casier' }) }}</div>
+<div class="col-6"> {{ form_row(form.prix_unitaire, { 'label' : 'Prix Unitaire Casier' }) }} </div>
+</div>
+
+<div class="row">
+
+<div class="col-6">{{ form_row(form.quantite_achete) }}</div>
+<div class="col-6">{{ form_row(form.date) }}</div>
+
+</div>
+{{ form_end(form) }}
+
+

@@ -1,0 +1,55 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}DepenseAppro index{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid" >
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+<div class="card-body table-responsive">
+<div class="container" >
+
+     <div class="row">
+    <table class="table table-bordered table-striped table-highlight">
+
+<a href="{{ path('app_depense_appro_new') }}" class="btn btn-success mb-3">Nouvelle dépense<i class="bi bi-plus"></i></a>
+
+    
+        <thead>
+            <tr>
+                <th>Boisson</th>
+                <th>Quantité achetée</th>
+                <th>Prix unitaire</th>
+                <th>Montant</th>
+                <th>Nombre de bouteilles</th>
+                <th>Date</th>
+                <th>action1</th>
+                <th>action2</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for depense_appro in depense_appros %}
+            <tr>
+                <td>{{ depense_appro.boisson.designation }}</td>
+                <td>{{ depense_appro.quantiteAchete }}</td>
+                <td>{{ depense_appro.prixUnitaire }}</td>
+                <td>{{ depense_appro.montant }}</td>
+                <td> {{ depense_appro.NombreTrou }}  </td>
+                <td>{{ depense_appro.date ? depense_appro.date|date('d-m-Y') }}</td>
+                <td>
+                    <a href="{{ path('app_depense_appro_edit', {'id': depense_appro.id}) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                </td>
+            <td><a href="{{ path('app_depense_appro_delete', {id : depense_appro.id} )}}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Etes-vous sûr de vouloir supprimer La Boisson: '+ {{depense_appro.id}})">delete</a>
+            </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

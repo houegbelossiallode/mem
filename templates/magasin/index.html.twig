@@ -1,0 +1,70 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Magasin index{% endblock %}
+
+{% block body %}
+  
+
+{% for flash_error in app.flashes('error') %}
+<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+{% endfor %}
+
+<div class="container-fluid" >
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+<div class="card-body table-responsive">
+<div class="container" >
+
+     <div class="row">
+    <table class="table table-bordered table-striped table-highlight">
+        <thead>
+            <tr>
+                <th>Boisson</th>
+                <th>Quantité en stock</th>
+                <th>Quantité servir au resto</th>
+                
+                <th>actions</th>
+                <th>Ajouter</th>
+                <th>Quantite Sortie</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for magasin in magasins %}
+            <tr>
+                
+            <td>{{ magasin.boisson.designation }}</td>
+                <td>{{ magasin.quantiteStock }}</td>
+                <td>{{ magasin.quantiteSortirResto }}</td>
+                <td>
+                    <a href="{{ path('app_magasin_show', {'id': magasin.id}) }}">show</a>
+                    <a href="{{ path('app_magasin_edit', {'id': magasin.id}) }}">edit</a>
+                </td>
+                <td>
+                    <form action="{{ path('add_quantite', {id : magasin.id})}}" method="POST">
+                     <div>
+                       <input type="text" name="ajout" id="ajout" class="form-control" placeholder="Ajout quantité">  
+                           </div>
+                       <button type="submit" class="btn btn-sm btn-outline-primary">Ajouter</button>
+                   </form>
+                   </td>
+
+                   <td>
+                    <form action="{{ path('drop_quantite', {id : magasin.id})}}" method="POST">
+                     <div>
+                       <input type="text" name="dimunier" id="drop" class="form-control" placeholder="Quantité Sortie">  
+                           </div>
+                       <button type="submit" class="btn btn-sm btn-outline-primary">sortir</button>
+                   </form>
+                   </td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_magasin_new') }}">Create new</a>
+{% endblock %}

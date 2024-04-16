@@ -1,0 +1,38 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Recette index{% endblock %}
+
+{% block body %}
+<div class="container-fluid" >
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+<div class="card-body table-responsive">
+<div class="container" >
+
+     <div class="row">
+    <table class="table table-bordered table-striped table-highlight">
+        <thead>
+            <tr>
+                <th>Montant_recette</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recette in recettes %}
+            <tr>
+                <td>{{ recette.montantRecette }}</td>
+                <td>
+                    <a href="{{ path('app_recette_show', {'vente_boisson': recette.vente_boisson}) }}">show</a>
+                    <a href="{{ path('app_recette_edit', {'vente_boisson': recette.vente_boisson}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_recette_new') }}">Create new</a>
+{% endblock %}

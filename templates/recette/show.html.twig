@@ -1,0 +1,22 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Recette{% endblock %}
+
+{% block body %}
+    <h1>Recette</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Montant_recette</th>
+                <td>{{ recette.montantRecette }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_recette_index') }}">back to list</a>
+
+    <a href="{{ path('app_recette_edit', {'vente_boisson': recette.vente_boisson}) }}">edit</a>
+
+    {{ include('recette/_delete_form.html.twig') }}
+{% endblock %}

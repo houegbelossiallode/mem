@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Congelateur{% endblock %}
+
+{% block body %}
+    <h1>Edit Congelateur</h1>
+
+    {{ include('congelateur/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_congelateur_index') }}">back to list</a>
+
+    {{ include('congelateur/_delete_form.html.twig') }}
+{% endblock %}

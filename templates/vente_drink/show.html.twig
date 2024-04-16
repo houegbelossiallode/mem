@@ -1,0 +1,38 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}VenteDrink{% endblock %}
+
+{% block body %}
+    <h1>VenteDrink</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vente_drink.id }}</td>
+            </tr>
+            <tr>
+                <th>Prix_vente</th>
+                <td>{{ vente_drink.prixVente }}</td>
+            </tr>
+            <tr>
+                <th>Quantite_boisson_vendue</th>
+                <td>{{ vente_drink.quantiteBoissonVendue }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ vente_drink.montant }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ vente_drink.date|date('d-m-Y') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_vente_drink_index') }}">back to list</a>
+
+    <a href="{{ path('app_vente_drink_edit', {'id': vente_drink.id}) }}">edit</a>
+
+    {{ include('vente_drink/_delete_form.html.twig') }}
+{% endblock %}

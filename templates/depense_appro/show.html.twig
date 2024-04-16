@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DepenseAppro{% endblock %}
+
+{% block body %}
+    <h1>DepenseAppro</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ depense_appro.id }}</td>
+            </tr>
+            <tr>
+                <th>Quantite_achete</th>
+                <td>{{ depense_appro.quantiteAchete }}</td>
+            </tr>
+            <tr>
+                <th>Prix_unitaire</th>
+                <td>{{ depense_appro.prixUnitaire }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ depense_appro.montant }}</td>
+            </tr>
+            <tr>
+                <th>Total_depense</th>
+                <td>{{ depense_appro.totalDepense }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ depense_appro.createdAt ? depense_appro.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_depense_appro_index') }}">back to list</a>
+
+    <a href="{{ path('app_depense_appro_edit', {'id': depense_appro.id}) }}">edit</a>
+
+    {{ include('depense_appro/_delete_form.html.twig') }}
+{% endblock %}

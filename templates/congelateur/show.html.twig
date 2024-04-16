@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Congelateur{% endblock %}
+
+{% block body %}
+    <h1>Congelateur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ congelateur.id }}</td>
+            </tr>
+            <tr>
+                <th>Qte_stock</th>
+                <td>{{ congelateur.qteStock }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_congelateur_index') }}">back to list</a>
+
+    <a href="{{ path('app_congelateur_edit', {'id': congelateur.id}) }}">edit</a>
+
+    {{ include('congelateur/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Edit Boisson{% endblock %}
+{% block pagetitle %}Modification d'une boisson{% endblock %}
+{% block body %}
+    
+
+    {{ include('boisson/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_boisson_index') }}">Listes des boissons</a>
+
+{% endblock %}

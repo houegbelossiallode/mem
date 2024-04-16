@@ -1,0 +1,66 @@
+{% extends 'template.html.twig' %}
+{% block title %}Vivre index{% endblock %}
+{% block pagetitle %}Listes des vivres{% endblock %}
+{% block body %}
+
+{% for flash_error in app.flashes('error') %}
+<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+{% endfor %}
+
+    <div class="container-fluid" >
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+    <div class="card-body table-responsive">
+    <div class="container" >
+    <div class="row">
+    <table class="table table-bordered table-striped table-highlight">
+        <thead>
+            <tr>
+                
+                <th>Designation</th>
+                <th>Qte en stock</th>
+                <th>Qte sortie</th>
+                <th>Ajouter</th>
+                <th>Sortie</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vivre in vivres %}
+            <tr>
+                
+                <td>{{ vivre.designation }}</td>
+                <td>{{ vivre.qteStock }}</td>
+                <td>{{ vivre.qteSortir }}</td>
+                    <td>
+                        <form action="{{ path('add_quantite_vivre', {id : vivre.id})}}" method="POST">
+                         <div>
+                           <input type="text" name="ajout" id="ajout" class="form-control" placeholder="Ajout quantité">  
+                               </div>
+                           <button type="submit" class="btn btn-sm btn-outline-primary">Ajouter</button>
+                       </form>
+                       </td>
+    
+                       <td>
+                        <form action="{{ path('drop_quantite_vivre', {id : vivre.id})}}" method="POST">
+                         <div>
+                           <input type="text" name="dimunier" id="drop" class="form-control" placeholder="Quantité Sortie">  
+                               </div>
+                           <button type="submit" class="btn btn-sm btn-outline-primary">sortir</button>
+                       </form>
+                       </td>
+                <td>
+                    <a href="{{ path('app_vivre_show', {'id': vivre.id}) }}">show</a>
+                    <a href="{{ path('app_vivre_edit', {'id': vivre.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_vivre_new') }}">Create new</a>
+{% endblock %}

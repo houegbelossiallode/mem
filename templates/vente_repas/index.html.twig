@@ -1,0 +1,69 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}VenteRepas index{% endblock %}
+
+{% block body %}
+   
+        <div class="container-fluid" >
+        <div class="card shadow mb-4">
+        <div class="card-header py-3">
+        <div class="card-body table-responsive">
+        <div class="container" >
+
+     <div class="row">
+      <table class="table table-bordered table-striped table-highlight">
+
+        <thead>
+            <tr>
+                
+                <th>Accompagnement</th>
+                <th>Protéine</th>
+                <th>Prix</th>
+                <th>Date</th>
+                <th>Statut</th>
+                {% if is_granted('ROLE_ADMIN')%}
+                <th>action 1</th>
+                <th>action 2</th>
+                {% endif %}
+                <th>action</th>  
+            </tr>
+        </thead>
+        <tbody>
+        {% for vente_repa in vente_repas %}
+            <tr>
+                
+                <td>
+                    {% if vente_repa.repas.accompagnement is defined %}
+                    {{vente_repa.repas.accompagnement }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if vente_repa.proteine.nom is defined %}
+                    {{vente_repa.proteine.nom }}
+                    {% endif %}
+                </td>
+                <td>{{ vente_repa.prixVente }}</td>
+                <td>{{ vente_repa.date|date('d-m-Y') }}</td>
+                <td>{{ vente_repa.statut}}</td>
+                {% if is_granted('ROLE_ADMIN')%}
+                <td>
+                <a href="{{ path('app_vente_repas_edit', {id : vente_repa.id} )}}" class="btn btn-sm btn-outline-success" >Modifier</a>
+                </td>
+                <td>
+                <a href="{{ path('app_vente_repas_delete', {id : vente_repa.id} )}}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Etes-vous sûr de vouloir exécuter cette action')">Supprimer</a>
+                </td>
+            {% endif %}
+            <td>
+            <a href="{{ path('app_vente_repas_annuler', {id : vente_repa.id} )}}" class="btn btn-sm btn-outline-primary">ANNULER</a>
+            </td>
+            </tr>
+          {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_vente_repas_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Edit VenteDrink{% endblock %}
+
+{% block body %}
+    <h1>Edit VenteDrink</h1>
+
+    {{ include('vente_drink/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_vente_drink_index') }}">RETOUR</a>
+
+{% endblock %}
