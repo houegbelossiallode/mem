@@ -4,8 +4,19 @@
 
 {% block pagetitle %}Vente Boisson{% endblock %}
 {% block body %}
+<style>
 
+.disabled{
+    pointer-events: none;
+}
+
+</style>
 {% for flash_error in app.flashes('error') %}
+<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+{% endfor %}
+
+</style>
+{% for flash_error in app.flashes('success') %}
 <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 {% endfor %}
 
@@ -23,10 +34,13 @@
     
         <thead>
             <tr>
-            <th>Boisson</th>
+                <th>Boisson</th>
                 <th>Prix de vente</th>
                 <th>Quantité vendue</th>
                 <th>Montant</th>
+                {% if is_granted('ROLE_ADMIN')%}
+                <th>Auteur</th>
+                {% endif %}
                 <th>Statut</th>
                 <th>Date de la vente</th>
                  {% if is_granted('ROLE_ADMIN')%}
@@ -43,8 +57,11 @@
                 <td>{{ vente_drink.prixVente }}</td>
                 <td>{{ vente_drink.quantiteBoissonVendue }}</td>
                 <td>{{ vente_drink.montant}}</td>
+                {% if is_granted('ROLE_ADMIN')%}
+                <td>{{ vente_drink.user.nom }}</td>
+                {% endif %}
                 <td class="text text-red">{{ vente_drink.statut|upper }}</td>
-                <td>{{ vente_drink.date|date('d-m-Y')  }}</td>
+                <td>{{vente_drink.date|date('d-m-Y')}}</td>
 
             {% if is_granted('ROLE_ADMIN')%}
             <td>
@@ -55,8 +72,13 @@
              <a href="{{ path('app_vente_drink_delete', {id : vente_drink.id} )}}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Etes-vous sûr de vouloir supprimer La Boisson: '+ {{vente_drink.id}})">delete</a>
            </td>
             {% endif %}
-            <td>
-            <a href="{{ path('app_vente_drink_annuler', {id : vente_drink.id} )}}" class="btn btn-sm btn-outline-primary">ANNULER</a>
+            <td >
+            {% if vente_drink.statut == 'annuler' %} 
+           <a href="{{ path('app_vente_drink_annuler', {id : vente_drink.id} )}}" class="btn btn-sm btn-outline-primary  disabled">ANNULER</a>  
+            {% else %}
+           <a href="{{ path('app_vente_drink_annuler', {id : vente_drink.id} )}}" class="btn btn-sm btn-outline-primary">ANNULER</a>
+            {% endif %}
+            
           </td>
            </tr>
         {% else %}
@@ -68,4 +90,7 @@
     </table>
 
     
+    
+
+
 {% endblock %}

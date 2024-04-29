@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\DepenseAppro;
+use App\Entity\User;
 use App\Form\DepenseApproType;
 use App\Repository\DepenseApproRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,6 +29,8 @@ class DepenseApproController extends AbstractController
     #[Route('/new', name: 'app_depense_appro_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        
+        $id = $this->getUser();
         $depenseAppro = new DepenseAppro();
         $form = $this->createForm(DepenseApproType::class, $depenseAppro);
         $form->handleRequest($request);
@@ -40,6 +43,7 @@ class DepenseApproController extends AbstractController
             $trou = (int)$quantite * (int)$nombre_trou;
             $depenseAppro->setMontant($montant);
             $depenseAppro->setNombreTrou($trou);
+            $depenseAppro->setUser($id);
             $entityManager->persist($depenseAppro);
             $entityManager->flush();
 

@@ -50,6 +50,43 @@ class DepenseApproRepository extends ServiceEntityRepository
         }  
 
 
+        public function unedate($date)
+        {
+           // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+            return $this->createQueryBuilder('d')
+                ->select(' b.designation','b.Seuil','d.quantite_achete','d.prix_unitaire','d.nombre_trou')
+                ->innerJoin('d.boisson','b')
+                ->Where('d.date =:date')
+                ->setParameter('date', $date->format('Y-m-d')) 
+                
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+    
+        public function recherche($date1,$date2,)
+        {
+           // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+            return $this->createQueryBuilder('d')
+                ->select(' b.designation','b.Seuil','d.quantite_achete','d.prix_unitaire','d.nombre_trou')
+                ->innerJoin('d.boisson','b')
+                ->Where('d.date BETWEEN :date1 AND :date2')
+                ->setParameter('date1', $date1->format('Y-m-d')) 
+                ->setParameter('date2', $date2->format('Y-m-d')) 
+                
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+
+
+
+
+
+
+
+        
+
 //    public function findOneBySomeField($value): ?DepenseAppro
 //    {
 //        return $this->createQueryBuilder('d')

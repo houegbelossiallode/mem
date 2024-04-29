@@ -42,6 +42,7 @@ class VenteRepasType extends AbstractType
             }
         ])
             ->add('prix_vente')
+            ->add('qte_vendue')
             ->add('date',DateType::class,[
                 'widget' => 'single_text',
                 'label'=> 'Date' 

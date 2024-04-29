@@ -42,6 +42,7 @@ class VenteRepasRepository extends ServiceEntityRepository
             $now = new \DateTime();
             $qb = $this->createQueryBuilder('v')
                 ->select('SUM(v.prix_vente)  AS total')
+                ->where('v.statut IS NULL')
                 ->andWhere('v.date =:date')
                 ->setParameter('date', $now->format('Y-m-d'))
                 ->getQuery()
@@ -50,6 +51,49 @@ class VenteRepasRepository extends ServiceEntityRepository
         }  
 
 
+
+  
+        public function unedate($date)
+    {
+       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+        return $this->createQueryBuilder('v')
+            ->select('r.accompagnement','p.nom','v.prix_vente')
+            ->leftJoin('v.repas','r')
+            ->leftJoin('v.proteine','p')
+            ->where('v.statut IS NULL')
+            ->andWhere('v.date =:date')
+            ->setParameter('date', $date->format('Y-m-d')) 
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function recherche($date1,$date2,)
+    {
+       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+        return $this->createQueryBuilder('v')
+            ->select('r.accompagnement','p.nom','v.prix_vente')
+            ->leftJoin('v.repas','r')
+            ->leftJoin('v.proteine','p')
+            ->where('v.statut IS NULL')
+            ->andWhere('v.date BETWEEN :date1 AND :date2')
+            ->setParameter('date1', $date1->format('Y-m-d')) 
+            ->setParameter('date2', $date2->format('Y-m-d')) 
+            ->groupBy('r.accompagnement')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+
+
+
+
+
+
+
+        
 //    public function findOneBySomeField($value): ?VenteRepas
 //    {
 //        return $this->createQueryBuilder('v')

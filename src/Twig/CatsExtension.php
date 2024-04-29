@@ -3,11 +3,10 @@
 namespace App\Twig;
 
 use App\Entity\DepenseAppro;
-use App\Entity\Messages;
-use App\Entity\Notifications;
+use App\Entity\DepenseVivre;
+use App\Entity\User;
 use App\Entity\VenteDrink;
 use App\Entity\VenteRepas;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 use Twig\Extension\AbstractExtension;
@@ -86,6 +85,60 @@ class CatsExtension extends AbstractExtension
     }
 
 
+    public function getNoms() : array
+    {
+        return[
+          new TwigFunction('cats',[$this,'getNom'])  
+        ];
+    }
+    
+    
+        public function getNom()
+        {
+            
+        $id = $this->security->getUser();
+    
+        return $this->em->getRepository(User::class)->findBy(['nom'=>'ASC','id'=>$id]);
+            
+        }
+    
+        public function getRecette() : array
+        {
+            return[
+              new TwigFunction('cats',[$this,'Recette'])  
+            ];
+        }
+        
+        
+        public function Recette()
+      {
+         $totalventeboisson = $this->em->getRepository(VenteDrink::class)->getNb();
+         $totalventerepas = $this->em->getRepository(VenteRepas::class)->getNb();
+        
+         return $totalventeboisson  + $totalventerepas;
+                
+     }
+
+
+     public function getDepenseVivres() : array
+     {
+         return[
+           new TwigFunction('cats',[$this,'getDepenseVivre'])  
+         ];
+     }
+     
+     public function getDepenseVivre()
+     {
+         
+       $totaldepensevivre = $this->em->getRepository(DepenseVivre::class)->getNb();
+             
+        return $totaldepensevivre;
+     }
+
+
+
+
+    
 
 
     

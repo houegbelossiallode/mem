@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Entity\Congelateur;
 use App\Entity\Magasin;
 use App\Entity\QuantiteAjoute;
+use App\Entity\User;
 use App\Form\MagasinType;
-use App\Repository\BoissonRepository;
 use App\Repository\CongelateurRepository;
 use App\Repository\MagasinRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,16 +14,47 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 
 #[Route('/magasin')]
 class MagasinController extends AbstractController
 {
-    #[Route('/', name: 'app_magasin_index', methods: ['GET'])]
-    public function index(MagasinRepository $magasinRepository): Response
+    #[Route('/', name: 'app_magasin_index', methods: ['GET'])] 
+    public function index(MagasinRepository $magasinRepository,MailerInterface $mailer): Response
     {
+        $user = new User();
+        $magasin  = new Magasin();
+        $magasin = $magasinRepository->findByBoisson();
+        $user = $this->getUser();
+        
+        foreach ($magasin as $magasins) 
+        {  
+        $mavariable = $magasins["designation"];
+       // $this->addFlash("critique", "Listes des boissons à approvisionner  " . $mavariable . " , " );
+       // echo    $mavariable . ' , ';
+       
+       $to = $user->getEmail();
+       $subject = 'Listes des boissons à réapprovisionner ';
+       $email = (new TemplatedEmail())
+       ->from(new Address('houegbelossiallode@gmail.com', 'Administratrice'))
+       ->to($to)
+       ->subject($subject)
+       ->htmlTemplate('magasin/email.html.twig')
+       ->context([
+        'magasin'=> $magasin
+       ]);
+       
+       }
+
+       $mailer->send($email);
+
+       
         return $this->render('magasin/index.html.twig', [
             'magasins' => $magasinRepository->findAll(),
+            'magasin'=>$magasin 
         ]);
     }
 

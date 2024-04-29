@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -34,6 +36,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[ORM\OneToMany(targetEntity: DepenseAppro::class, mappedBy: 'user')]
+    private Collection $depenseAppros;
+
+    #[ORM\OneToMany(targetEntity: VenteRepas::class, mappedBy: 'user')]
+    private Collection $venteRepas;
+
+    #[ORM\OneToMany(targetEntity: VenteDrink::class, mappedBy: 'user')]
+    private Collection $venteDrinks;
+
+    public function __construct()
+    {
+        $this->depenseAppros = new ArrayCollection();
+        $this->venteRepas = new ArrayCollection();
+        $this->venteDrinks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -125,6 +143,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DepenseAppro>
+     */
+    public function getDepenseAppros(): Collection
+    {
+        return $this->depenseAppros;
+    }
+
+    public function addDepenseAppro(DepenseAppro $depenseAppro): static
+    {
+        if (!$this->depenseAppros->contains($depenseAppro)) {
+            $this->depenseAppros->add($depenseAppro);
+            $depenseAppro->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDepenseAppro(DepenseAppro $depenseAppro): static
+    {
+        if ($this->depenseAppros->removeElement($depenseAppro)) {
+            // set the owning side to null (unless already changed)
+            if ($depenseAppro->getUser() === $this) {
+                $depenseAppro->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VenteRepas>
+     */
+    public function getVenteRepas(): Collection
+    {
+        return $this->venteRepas;
+    }
+
+    public function addVenteRepa(VenteRepas $venteRepa): static
+    {
+        if (!$this->venteRepas->contains($venteRepa)) {
+            $this->venteRepas->add($venteRepa);
+            $venteRepa->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVenteRepa(VenteRepas $venteRepa): static
+    {
+        if ($this->venteRepas->removeElement($venteRepa)) {
+            // set the owning side to null (unless already changed)
+            if ($venteRepa->getUser() === $this) {
+                $venteRepa->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VenteDrink>
+     */
+    public function getVenteDrinks(): Collection
+    {
+        return $this->venteDrinks;
+    }
+
+    public function addVenteDrink(VenteDrink $venteDrink): static
+    {
+        if (!$this->venteDrinks->contains($venteDrink)) {
+            $this->venteDrinks->add($venteDrink);
+            $venteDrink->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVenteDrink(VenteDrink $venteDrink): static
+    {
+        if ($this->venteDrinks->removeElement($venteDrink)) {
+            // set the owning side to null (unless already changed)
+            if ($venteDrink->getUser() === $this) {
+                $venteDrink->setUser(null);
+            }
+        }
 
         return $this;
     }

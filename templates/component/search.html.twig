@@ -1,71 +1,61 @@
 {{ form_start(form) }}
 <div class="input-group">
-  <div class="form-outline" data-mdb-input-init>
+  <div class="form-outline" >
 <div> {{ form_widget(form.rechercher) }} </div>
    
   </div>
-  <button id="search-button" type="submit" class="btn btn-primary">
-    <i class="fas fa-search"></i>
+  <button  type="submit" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#ExtralargeModal">
+  <i class="bi bi-search"></i>
   </button>
 </div>
 {{ form_rest(form) }}
 
-
-
-<div class="search-bar">
-  <form class="search-form d-flex align-items-center" method="POST" action="#">
-    <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-    <button type="submit" title="Search" data-bs-toggle="modal" data-bs-target="#basicModal"><i class="bi bi-search"></i></button>
-  </form>
-</div><!-- End Search Bar -->
-
-
-
-
-{% if app.request.method == 'POST' %}
-<form class="form-horizontal">
-<div class="table-responsive">
-  <table class="table table-bordered table-striped table-highlight">
-                    <thead>
-                        <tr>
-                            
-                            <th>Boisson</th>
-                            <th>Seuil</th>
-                            <th>Quantité Vendue</th>
-                            <th>Total vendue</th>
-                                
-                        </tr>
-                    </thead>
-                    
-                        
-                   
-                    <tbody>
-                        {% if donnees |length == 0 %}
-                    <h1>Aucun resultats pour la recherche</h1>
-                        {% else %}
-                        <h1>Résultats de la recherche</h1>
-                        {% for donnee in donnees %}
-                            <tr>
-                                
-                                <td>{{ donnee.designation }}</td>
-                                <td>{{ donnee.Seuil }}</td>
-                                <td>{{ donnee.quantite_boisson_vendue }}</td>
-                                <td>{{ donnee.total }}</td>
-                                
-                                <td>
-                                    
-                                    
-                                </td>
-                                
-                            </tr>
-                            {% endfor %}
-                            
-                            
-                        {% endif %}
-                    </tbody>
-                
-                </table>
-            
-        </div>
-    </form>
-{% endif %}
+  
+      {% if app.request.method == 'POST' %}
+      <form class="form-horizontal">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-highlight">
+                          <thead>
+                              <tr>
+                                  <th>Boisson</th>
+                                  <th>Seuil</th>
+                                  <th>Quantité Vendue</th>
+                                  <th>Total vendue</th>
+                                      
+                              </tr>
+                          </thead>
+                          
+                              
+                         
+                          <tbody>
+                              {% if donnees |length == 0 %}
+                          <h4>Aucun resultats pour la recherche</h4>
+                              {% else %}
+                              <h4 class="text text-primary">Résultats de la recherche</h4>
+                              {% for donnee in donnees %}
+                                  <tr>
+                                      
+                                      <td>{{ donnee.designation }}</td>
+                                      <td>{{ donnee.Seuil }}</td>
+                                      <td>{{ donnee.quantite_boisson_vendue }}</td>
+                                      <td>{{ donnee.total }}</td>
+                                      
+                                      <td>
+                                          
+                                          
+                                      </td>
+                                      
+                                  </tr>
+                                  {% endfor %}
+                                  
+                                  
+                              {% endif %}
+                          </tbody>
+                      
+                      </table>
+                  
+              </div>
+          </form>
+      {% endif %}
+      
+ 

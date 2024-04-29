@@ -36,6 +36,26 @@ class RecetteRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+
+       public function getDateRecette($date)
+        {
+            $now = new \DateTime();
+            $qb = $this->createQueryBuilder('r')
+                ->select('SUM(v.montant)  AS total1','SUM(t.prix_vente)  AS total2','CONCAT(SUM(v.montant) + SUM(t.prix_vente)) AS recette')
+                ->innerJoin('r.vente_boisson','v')
+                ->innerJoin('r.vente_repas','t')
+                ->Where('v.date =:date1')
+                ->Where('t.date =:date2')
+                ->setParameter('date1', $date->format('Y-m-d'))
+                ->setParameter('date2', $date->format('Y-m-d'))
+                ->getQuery()
+                ->getSingleScalarResult();
+                
+                return $qb;
+        }  
+
+
+
 //    public function findOneBySomeField($value): ?Recette
 //    {
 //        return $this->createQueryBuilder('r')

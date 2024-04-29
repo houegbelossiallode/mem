@@ -4,6 +4,18 @@
 
 {% block body %}
   
+                        {% if app.request.method == 'GET' %}
+                            {% if magasin |length > 0 %}
+                            <h3 class="alert alert-danger">Listes des boissons à réapprovisionner</h3>
+                            {% endif %}
+                            <marquee  direction="right">
+                            <h4 class="alert alert-danger">
+                            {% for donnee in magasin %}
+                            {{ donnee.designation}}
+                            {% endfor %}
+                            </h4>
+                            </marquee>  
+                        {% endif %}
 
 {% for flash_error in app.flashes('error') %}
 <div class="alert alert-danger" role="alert">{{ flash_error }}</div>

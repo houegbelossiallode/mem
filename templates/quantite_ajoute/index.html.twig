@@ -3,6 +3,11 @@
 {% block title %}QuantiteAjoute index{% endblock %}
 {% block pagetitle %}Quantité  Ajoutée{% endblock %}
 {% block body %}
+
+{% for flash_error in app.flashes('success') %}
+<div class="alert alert-success" role="alert">{{ flash_error }}</div>
+{% endfor %}
+
 <div class="container-fluid" >
 <div class="card shadow mb-4">
 <div class="card-header py-3">
@@ -13,32 +18,39 @@
     <table class="table table-bordered table-striped table-highlight">
         <thead>
             <tr>
-                <th>Boisson</th>
-                <th>Quantite ajoutée</th>
-                <th>Quantite sortir</th>
-                <th>Vivre</th>
-                <th>Date</th>
-                
+                <th class="text text-center">Boisson</th>
+                <th class="text text-center">Quantite ajoutée</th>
+                <th class="text text-center">Quantite sortir</th>
+                <th class="text text-center">Vivre</th>
+                <th class="text text-center">Date</th>
+                <th colspan="2" class="text text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for quantite_ajoute in quantite_ajoutes %}
             <tr>
                
-                <td>
+                <td class="text text-center">
                 {% if quantite_ajoute.magasin.boisson.designation is defined %}
                 {{quantite_ajoute.magasin.boisson.designation }}
                 {% endif %}
                 </td>
-                <td>{{ quantite_ajoute.quantiteAjoutee }}</td>
-                <td>{{ quantite_ajoute.quantiteSortir }}</td>
-                    <td>
+                <td class="text text-center">{{ quantite_ajoute.quantiteAjoutee }}</td>
+                <td class="text text-center">{{ quantite_ajoute.quantiteSortir }}</td>
+                    <td class="text text-center">
                         {% if quantite_ajoute.vivre.designation is defined %}
                         {{quantite_ajoute.vivre.designation }}
                         {% endif %}
-                        </td>
+                    </td>
 
-                <td>{{ quantite_ajoute.createdAt ? quantite_ajoute.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="text text-center">{{ quantite_ajoute.createdAt ? quantite_ajoute.createdAt|date('d/m/Y') }}</td>
+
+                    <td>
+                    <a href="{{ path('app_quantite_ajoute_edit', {id : quantite_ajoute.id} )}}" class="btn btn-sm btn-outline-success" ><i class="bi bi-pencil text-success ml-5"></i></a>
+                    </td>
+                    
+                    <td><a href="{{ path('app_quantite_ajoute_delete', {id : quantite_ajoute.id} )}}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Etes-vous sûr de vouloir executer cette action')"><i class="bi bi-trash text-danger ml-5"></i></a>
+                    </td>
                 
             </tr>
         {% else %}

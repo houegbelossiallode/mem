@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\VenteDrink;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,6 +46,7 @@ class VenteDrinkRepository extends ServiceEntityRepository
             $now = new \DateTime();
             $qb = $this->createQueryBuilder('v')
                 ->select('SUM(v.montant)  AS total')
+                ->where('v.Statut IS NULL')
                 ->andWhere('v.date =:date')
                 ->setParameter('date', $now->format('Y-m-d'))
                 ->getQuery()
@@ -61,6 +63,7 @@ class VenteDrinkRepository extends ServiceEntityRepository
             $qb = $this->createQueryBuilder('v')
                 ->select('SUM(v.montant)  AS total')
                 ->innerJoin('v.boisson','b')
+                ->where('v.Statut IS NULL')
                 ->Where('v.date =:date')
                 ->andWhere('b.designation LIKE :designation')
                 ->setParameter('date', $now->format('Y-m-d'))
@@ -71,17 +74,91 @@ class VenteDrinkRepository extends ServiceEntityRepository
                 return $qb;
         }  
 
-        public function search($designation): array
+     public function search($designation): array
     {
         return $this->createQueryBuilder('v')
             ->select('b.designation','b.Seuil','SUM(v.montant)  AS total','v.quantite_boisson_vendue')
             ->innerJoin('v.boisson','b')
-            ->Where('b.designation LIKE :designation')
+            ->where('v.Statut IS NULL')
+            ->andWhere('b.designation LIKE :designation')
             ->setParameter('designation', $designation ) 
             ->getQuery()
             ->getResult()
         ;
     }
+
+
+
+    public function unedate($date)
+    {
+       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+        return $this->createQueryBuilder('v')
+            ->select(' b.designation','b.Seuil','SUM(v.quantite_boisson_vendue) AS quantite')
+            ->innerJoin('v.boisson','b')
+            ->where('v.Statut IS NULL')
+            ->andWhere('v.date =:date')
+            ->setParameter('date', $date->format('Y-m-d')) 
+            ->groupBy('b.designation')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function recherche($date1,$date2,)
+    {
+       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+        return $this->createQueryBuilder('v')
+            ->select('SUM(v.montant) AS total','b.designation','b.Seuil','SUM(v.quantite_boisson_vendue) AS quantite','SUM(v.montant) AS tglobal')
+            ->innerJoin('v.boisson','b')
+            ->where('v.Statut IS NULL')
+            ->andWhere('v.date BETWEEN :date1 AND :date2')
+            ->setParameter('date1', $date1->format('Y-m-d')) 
+            ->setParameter('date2', $date2->format('Y-m-d')) 
+            ->groupBy('b.designation')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+
+
+    public function findBylaitunedate($date)
+    {
+       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+        return $this->createQueryBuilder('v')
+            ->select(' b.designation','b.Seuil','SUM(v.quantite_boisson_vendue) AS quantite','SUM(v.montant) AS total','v.prix_vente')
+            ->innerJoin('v.boisson','b')
+            ->where('v.Statut IS NULL')
+            ->andWhere('v.date =:date')
+            ->andWhere('b.designation LIKE :designation')
+            ->setParameter('designation', 'LAIT CAILLE')
+            ->setParameter('date', $date->format('Y-m-d')) 
+            ->groupBy('b.designation')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findBylaitdeuxdate($date1,$date2,)
+    {
+       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+        return $this->createQueryBuilder('v')
+            ->select(' b.designation','b.Seuil','SUM(v.quantite_boisson_vendue) AS quantite','SUM(v.montant) AS total','v.prix_vente')
+            ->innerJoin('v.boisson','b')
+            ->where('v.Statut IS NULL')
+            ->andWhere('v.date BETWEEN :date1 AND :date2')
+            ->andWhere('b.designation LIKE :designation')
+            ->setParameter('designation', 'LAIT CAILLE')
+            ->setParameter('date1', $date1->format('Y-m-d')) 
+            ->setParameter('date2', $date2->format('Y-m-d')) 
+            ->groupBy('b.designation')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    
         
 //    public function findOneBySomeField($value): ?VenteDrink
 //    {

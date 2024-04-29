@@ -36,6 +36,21 @@ class CongelateurRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+
+   public function findByBoisson()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('b.designation','c.qte_stock')
+            ->Join('c.boisson','b')
+            ->Where('c.qte_stock <= :Seuil')
+            ->setParameter('Seuil', 3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+
 //    public function findOneBySomeField($value): ?Congelateur
 //    {
 //        return $this->createQueryBuilder('c')

@@ -6,6 +6,7 @@ use App\Entity\QuantiteAjoute;
 use App\Form\QuantiteAjouteType;
 use App\Repository\QuantiteAjouteRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,14 +69,20 @@ class QuantiteAjouteController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_quantite_ajoute_delete', methods: ['POST'])]
-    public function delete(Request $request, QuantiteAjoute $quantiteAjoute, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_quantite_ajoute_delete')]
+    public function delete(int $id, QuantiteAjoute $quantiteAjoute, ManagerRegistry $doctrine): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$quantiteAjoute->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($quantiteAjoute);
-            $entityManager->flush();
-        }
+        $quantite_ajoute = new QuantiteAjoute();
+        $quantite_ajoute = $doctrine->getRepository(QuantiteAjoute::class)->find($id);
+   
+        if($quantite_ajoute)
+        {
+            $manager = $doctrine->getManager();
+            $manager->remove($quantite_ajoute);
+            $manager->flush();
+            $this->addFlash("success","Suppression réussi");
 
         return $this->redirectToRoute('app_quantite_ajoute_index', [], Response::HTTP_SEE_OTHER);
+        }
     }
 }

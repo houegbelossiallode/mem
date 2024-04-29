@@ -1,0 +1,10 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}New dépense{% endblock %}
+{% block pagetitle %}Create new Depense{% endblock %}
+{% block body %}
+
+    {{ include('depense_vivre/_form.html.twig') }}
+
+    <a href="{{ path('app_depense_vivre_index') }}">back to list</a>
+{% endblock %}

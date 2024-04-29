@@ -4,21 +4,52 @@ namespace App\Controller;
 
 use App\Entity\Congelateur;
 use App\Form\CongelateurType;
+use App\Entity\User;
 use App\Repository\CongelateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 
 #[Route('/congelateur')]
 class CongelateurController extends AbstractController
 {
     #[Route('/', name: 'app_congelateur_index', methods: ['GET'])]
-    public function index(CongelateurRepository $congelateurRepository): Response
+    public function index(CongelateurRepository $congelateurRepository,MailerInterface $mailer): Response
     {
+        $user = new User();
+        $user = $this->getUser();
+        $conge = $congelateurRepository->findByBoisson();
+        
+        foreach ($conge as $conges)
+        {  
+            
+        $mavariable = $conges["designation"];
+          
+        $to = $user->getEmail();
+        $subject = 'Listes des boissons à réapprovisionner ';
+        $email = (new TemplatedEmail())
+       ->from(new Address('houegbelossiallode@gmail.com', 'Administratrice'))
+       ->to($to)
+       ->subject($subject)
+       ->htmlTemplate('congelateur/email.html.twig')
+       ->context([
+        'conge'=> $conge
+        ]);
+        $mailer->send($email);
+        }
+        
+         
+         
+       
+        $congelateurs = $congelateurRepository->findAll();
         return $this->render('congelateur/index.html.twig', [
-            'congelateurs' => $congelateurRepository->findAll(),
+            'congelateurs' => $congelateurs,
+            'conge'=>$conge 
         ]);
     }
 

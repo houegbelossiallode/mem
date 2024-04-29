@@ -1,0 +1,12 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Edit DepenseVivre{% endblock %}
+
+{% block body %}
+    <h1>Edit DepenseVivre</h1>
+
+    {{ include('depense_vivre/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_depense_vivre_index') }}">back to list</a>
+
+{% endblock %}

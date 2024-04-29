@@ -31,6 +31,7 @@ class VenteDrinkController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager,VenteDrinkRepository $venteDrinkRepository, CongelateurRepository $congelateurRepository
     ,ManagerRegistry $doctrine): Response
     {
+        $id = $this->getUser();
         $venteDrink = new VenteDrink();
         $form = $this->createForm(VenteDrinkType::class, $venteDrink);
         $form->handleRequest($request);
@@ -40,11 +41,8 @@ class VenteDrinkController extends AbstractController
             
             $quantite_vendue = $form->getData()->getQuantiteBoissonVendue();
             $prix_vente = $form->getData()->getPrixVente();
-
             $montant = (int)$quantite_vendue * (int)$prix_vente;
-            $venteDrink->setMontant($montant);
-            $entityManager->persist($venteDrink);
-            $entityManager->flush();
+           
             
 
             $boisson = $venteDrink->getBoisson()->getId();
@@ -59,14 +57,28 @@ class VenteDrinkController extends AbstractController
             }
            
             $manager = $doctrine->getManager();
-            if ($quantite_vendue > $congelateur->getQteStock()) {
+            
+            if (!$congelateur->getBoisson()) {
+                $this->addFlash("success", " Cette boisson"  .$congelateur->getBoisson().  " n'est pas dans le congelateur " );
+                
+                return $this->redirectToRoute('app_vente_drink_index');
+               }
+               elseif ($quantite_vendue > $congelateur->getQteStock()) {
                 $this->addFlash("error", "La quantité de " .$congelateur->getBoisson().  " n'est pas suffisante pour honorer la commande" );
                 return $this->redirectToRoute('app_vente_drink_index');
                }
+               else{
+                
+                $venteDrink->setMontant($montant);
+                $venteDrink->setUser($id);
+                $entityManager->persist($venteDrink);
+                $entityManager->flush();
+                $congelateur->setQteStock($congelateur->getQteStock() -  $quantite_vendue);
+                $manager->persist($congelateur);
+                $manager->flush(); 
+               }
             
-            $congelateur->setQteStock($congelateur->getQteStock() -  $quantite_vendue);
-            $manager->persist($congelateur);
-            $manager->flush();           
+                     
 
             return $this->redirectToRoute('app_vente_drink_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -117,15 +129,34 @@ class VenteDrinkController extends AbstractController
 
 
     #[Route('/{id}/annuler', name: 'app_vente_drink_annuler', methods: ['GET', 'POST'])]
-    public function annuler(Request $request,VenteDrinkRepository $venteDrinkRepository,int $id,ManagerRegistry $doctrine): Response
+    public function annuler(CongelateurRepository $congelateurRepository,VenteDrinkRepository $venteDrinkRepository,int $id,ManagerRegistry $doctrine): Response
     {
        
         $vente = $venteDrinkRepository->find($id); 
+        $quantite_vendue = $vente->getQuantiteBoissonVendue();
         $manager = $doctrine->getManager();
         $vente->setStatut("annuler");
         $manager->persist($vente);
         $manager->flush();
 
+       
+        
+        $boisson = $vente->getBoisson()->getId();
+        $congelateurs = $congelateurRepository->findBy(['boisson'=>$boisson]);
+            
+            if($congelateurs === null or $congelateurs === []){
+                $congelateur = new Congelateur();
+            }
+            else    {
+                $congelateur = $congelateurs[0];
+            }
+        $manager = $doctrine->getManager();
+        $congelateur->setQteStock($congelateur->getQteStock() +  $quantite_vendue);
+       // $manager->remove($quantite_vendue);
+        $manager->persist($congelateur);
+        $manager->flush();
+        
+        
         return $this->redirectToRoute('app_vente_drink_index');
     }
 

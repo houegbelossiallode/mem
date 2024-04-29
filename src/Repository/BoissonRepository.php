@@ -24,14 +24,12 @@ class BoissonRepository extends ServiceEntityRepository
 //    /**
 //     * @return Boisson[] Returns an array of Boisson objects
 //     */
-    public function findByBoisson(): array
+    public function findByBoissonTest()
     {
         return $this->createQueryBuilder('b')
-             ->select('b.designation','b.seuil','m.quantite_stock')
-             ->innerJoin('b..boisson','b')
-             ->Where('m.quantite_stock <=:val')
-             ->setParameter('val', 'seuil')
-             ->orderBy('b.id', 'ASC')
+             
+             ->innerJoin('b.magasins','m')
+             ->Where('m.quantite_stock = b.Seuil')
              ->getQuery()
              ->getResult()
         ;

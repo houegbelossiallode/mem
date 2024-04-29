@@ -3,6 +3,16 @@
 {% block title %}VenteRepas index{% endblock %}
 
 {% block body %}
+
+<style>
+.disabled{
+  pointer-events: none;
+}
+</style>
+
+
+
+
    
         <div class="container-fluid" >
         <div class="card shadow mb-4">
@@ -18,7 +28,12 @@
                 
                 <th>Accompagnement</th>
                 <th>Protéine</th>
+                <th>Quantité vendue</th>
                 <th>Prix</th>
+                <th>montant</th>
+                {% if is_granted('ROLE_ADMIN')%}
+                <th>Auteur</th>
+                {% endif %}
                 <th>Date</th>
                 <th>Statut</th>
                 {% if is_granted('ROLE_ADMIN')%}
@@ -42,7 +57,12 @@
                     {{vente_repa.proteine.nom }}
                     {% endif %}
                 </td>
+                <td>{{ vente_repa.qteVendue }}</td>
                 <td>{{ vente_repa.prixVente }}</td>
+                <td>{{ vente_repa.montant }}</td>
+                {% if is_granted('ROLE_ADMIN')%}
+                <td>{{ vente_repa.user.nom }}</td>
+                {% endif %}
                 <td>{{ vente_repa.date|date('d-m-Y') }}</td>
                 <td>{{ vente_repa.statut}}</td>
                 {% if is_granted('ROLE_ADMIN')%}
@@ -54,7 +74,11 @@
                 </td>
             {% endif %}
             <td>
-            <a href="{{ path('app_vente_repas_annuler', {id : vente_repa.id} )}}" class="btn btn-sm btn-outline-primary">ANNULER</a>
+                {% if vente_repa.statut == 'annuler' %} 
+               <a href="{{ path('app_vente_repas_annuler', {id : vente_repa.id} )}}" class="btn btn-sm btn-outline-primary disabled" >ANNULER</a>
+               {% else %}
+               <a href="{{ path('app_vente_repas_annuler', {id : vente_repa.id} )}}" class="btn btn-sm btn-outline-primary">ANNULER</a>
+               {% endif %}
             </td>
             </tr>
           {% else %}

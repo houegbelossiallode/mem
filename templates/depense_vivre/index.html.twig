@@ -1,0 +1,53 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}DepenseAppro index{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid" >
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+<div class="card-body table-responsive">
+<div class="container" >
+
+     <div class="row">
+    <table class="table table-bordered table-striped table-highlight">
+
+   <a href="{{ path('app_depense_vivre_new') }}" class="btn btn-success mb-3">Nouvelle dépense<i class="bi bi-plus"></i></a>
+
+    
+        <thead>
+            <tr>
+                
+                <th>Designation</th>
+                <th>Quantite</th>
+                <th>Prix</th>
+                <th>action1</th>
+                <th>action2</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for depense_vivre in depense_vivres %}
+            <tr>
+                
+                <td>{{ depense_vivre.designation }}</td>
+                <td>{{ depense_vivre.quantite }}</td>
+                <td>{{ depense_vivre.prix }}</td>
+                <td>
+                    <a href="{{ path('app_depense_vivre_edit', {'id': depense_vivre.id}) }}"><i class="bi bi-pencil text-success ml-5"></i></a>
+                </td>
+                {% if is_granted('ROLE_ADMIN')%}
+                <td>
+                <a href="{{ path('app_depense_vivre_delete', {'id': depense_vivre.id}) }}"><i class="bi bi-trash text-danger ml-5"></i></a>
+                </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

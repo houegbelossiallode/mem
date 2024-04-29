@@ -37,8 +37,11 @@ class VenteDrink
     #[ORM\OneToMany(targetEntity: Recette::class, mappedBy: 'vente_boisson')]
     private Collection $recettes;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable:true)]
     private ?string $Statut = null;
+
+    #[ORM\ManyToOne(inversedBy: 'venteDrinks')]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -158,6 +161,18 @@ class VenteDrink
     public function setStatut(string $Statut): static
     {
         $this->Statut = $Statut;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

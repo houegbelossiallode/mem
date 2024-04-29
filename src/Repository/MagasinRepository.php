@@ -24,13 +24,15 @@ class MagasinRepository extends ServiceEntityRepository
 //    /**
 //     * @return Magasin[] Returns an array of Magasin objects
 //     */
-   public function findByBoisson(): array
+   public function findByBoisson()
     {
         return $this->createQueryBuilder('m')
-            ->select('b.designation','b.Seuil','m.quantite_stock')
-            ->innerJoin('m.boisson','b')
-            ->Where('m.quantite_stock <=:Seuil')
-            ->setParameter('Seuil', 'Seuil')  
+            ->select('b.designation','m.quantite_stock')
+            ->leftJoin('m.boisson','b')
+            ->Where('m.quantite_stock <= b.Seuil')
+        //    ->orWhere('m.quantite_stock < b.Seuil')
+        //    ->setParameter('b.Seuil', 'b.Seuil')
+        //    ->setParameter('Seuil', 'b.Seuil')
             ->getQuery()
             ->getResult()
         ;

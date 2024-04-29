@@ -1,0 +1,75 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello RechercheController!{% endblock %}
+
+{% block body %}
+
+<section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+
+
+{{ form_start(form) }}
+<div class="row">
+
+<div class="col-2">{{ form_row(form.date1) }}</div>
+<div class="col-2">{{ form_row(form.date2) }}</div>
+</div>
+
+{{ form_end(form) }}
+
+
+
+<div class="col-10">
+
+
+{% if app.request.method == 'POST' %}
+<form class="form-horizontal">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-highlight">
+                          <thead>
+                              <tr>
+                                  <th>Repas</th>
+                                  <th>Protéine</th>
+                                  <th>Prix de vente</th>
+                                  
+                                      
+                              </tr>
+                          </thead>
+                          
+                              
+                         
+                          <tbody>
+                              {% if donnees |length == 0 %}
+                          <h4>Aucun resultats pour la recherche</h4>
+                              {% else %}
+                              <h4 class="text text-primary">Résultats de la recherche</h4>
+                              {% for donnee in donnees %}
+                                  <tr>
+                                      
+                                      <td>{{ donnee.accompagnement}}</td>
+                                      <td>{{ donnee.nom}}</td>
+                                      <td>{{ donnee.prix_vente }}</td>
+                                      
+                                   
+                                  </tr>
+                                  {% endfor %}
+                                  
+                                  
+                              {% endif %}
+                          </tbody>
+                      
+                      </table>
+                 
+              </div>
+          </form>
+          {% endif %}
+
+
+</div>
+
+{% endblock %}

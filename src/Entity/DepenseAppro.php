@@ -33,6 +33,9 @@ class DepenseAppro
     #[ORM\Column(length: 30)]
     private ?string $nombre_trou = null;
 
+    #[ORM\ManyToOne(inversedBy: 'depenseAppros')]
+    private ?User $user = null;
+
    
     public function __construct()
     {
@@ -114,6 +117,18 @@ class DepenseAppro
     public function setNombreTrou(string $nombre_trou): static
     {
         $this->nombre_trou = $nombre_trou;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

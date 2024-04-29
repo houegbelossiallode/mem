@@ -27,19 +27,22 @@ class VenteRepasController extends AbstractController
     #[Route('/new', name: 'app_vente_repas_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,ManagerRegistry $doctrine): Response
     {
+        $id_user = $this->getUser();
         $venteRepa = new VenteRepas();
         $form = $this->createForm(VenteRepasType::class, $venteRepa);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
            
+            $qte_vendue = $form->getData()->getQteVendue();
+            $prix_vente = $form->getData()->getPrixVente();
+            $montant = (int)$qte_vendue * (int)$prix_vente;
+            $venteRepa->setUser($id_user);
+            $venteRepa->setMmontant($montant);
             $entityManager->persist($venteRepa);
             $entityManager->flush();
             $id = $venteRepa->getId();
             
-            
-           
-
             return $this->redirectToRoute('app_vente_repas_index', [], Response::HTTP_SEE_OTHER);
         }
 

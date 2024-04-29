@@ -33,8 +33,17 @@ class VenteRepas
     #[ORM\ManyToOne(inversedBy: 'venteRepas')]
     private ?Proteine $proteine = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable:true)]
     private ?string $statut = null;
+
+    #[ORM\ManyToOne(inversedBy: 'venteRepas')]
+    private ?User $user = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $qte_vendue = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $montant = null;
 
     public function __construct()
     {
@@ -137,6 +146,42 @@ class VenteRepas
     public function setStatut(string $statut): static
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getQteVendue(): ?string
+    {
+        return $this->qte_vendue;
+    }
+
+    public function setQteVendue(string $qte_vendue): static
+    {
+        $this->qte_vendue = $qte_vendue;
+
+        return $this;
+    }
+
+    public function getMontant(): ?string
+    {
+        return $this->montant;
+    }
+
+    public function setMmontant(string $montant): static
+    {
+        $this->montant = $montant;
 
         return $this;
     }

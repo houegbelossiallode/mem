@@ -15,7 +15,7 @@ class MailerService
 
     public function sendEmail(
         $to = '',
-        $subject = 'Demande de contact sur vôtre site',
+        $subject = '',
         $content = '',
         $text = '',
        
@@ -23,7 +23,7 @@ class MailerService
     ): void{
         
         $email = (new TemplatedEmail())
-        ->from(new Address('houegbelossiallodegoldfroy@gmail.com', 'Isgostage'))
+        ->from(new Address('houegbelossiallode@gmail.com', 'Administratrice'))
         ->to($to)
         ->text($text)
         ->subject($subject)
