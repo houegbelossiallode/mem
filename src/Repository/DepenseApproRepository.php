@@ -54,7 +54,7 @@ class DepenseApproRepository extends ServiceEntityRepository
         {
            // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
             return $this->createQueryBuilder('d')
-                ->select(' b.designation','b.Seuil','d.quantite_achete','d.prix_unitaire','d.nombre_trou')
+                ->select(' b.designation','b.Seuil','d.quantite_achete','d.prix_unitaire','d.nombre_trou','d.montant')
                 ->innerJoin('d.boisson','b')
                 ->Where('d.date =:date')
                 ->setParameter('date', $date->format('Y-m-d')) 
@@ -68,7 +68,7 @@ class DepenseApproRepository extends ServiceEntityRepository
         {
            // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
             return $this->createQueryBuilder('d')
-                ->select(' b.designation','b.Seuil','d.quantite_achete','d.prix_unitaire','d.nombre_trou')
+                ->select(' b.designation','b.Seuil','d.quantite_achete','d.prix_unitaire','d.nombre_trou','d.montant')
                 ->innerJoin('d.boisson','b')
                 ->Where('d.date BETWEEN :date1 AND :date2')
                 ->setParameter('date1', $date1->format('Y-m-d')) 

@@ -137,12 +137,77 @@ class CatsExtension extends AbstractExtension
 
 
 
-
+     public function getVenteBoissonAnnuler() : array
+     {
+         return[
+           new TwigFunction('cats',[$this,'getVenteAnnuler'])  
+         ];
+     }
+     
+     public function getVenteAnnuler()
+     {
+         
+       $venteboissonannuler = $this->em->getRepository(VenteDrink::class)->findByVenteAnnuler();
+             
+        return $venteboissonannuler;
+     }
     
 
-
+     public function getVenteRepasAnnuler() : array
+     {
+         return[
+           new TwigFunction('cats',[$this,'getRepasAnnuler'])  
+         ];
+     }
+     
+     public function getRepasAnnuler()
+     {
+         
+       $venterepasannuler = $this->em->getRepository(VenteRepas::class)->findByRepasAnnuler();
+        return $venterepasannuler;
+     }
     
 
+   
+
+
+
+
+public function getSoldeBoisson() : array
+{
+    return[
+      new TwigFunction('cats',[$this,'SoldeBoisson'])  
+    ];
+}
+
+
+public function SoldeBoisson()
+{
+ $totalventeboisson = $this->em->getRepository(VenteDrink::class)->getNb();
+ $totaldepenseboisson = $this->em->getRepository(DepenseAppro::class)->getNb();
+
+ return $totalventeboisson  - $totaldepenseboisson;
+        
+}
+
+
+
+
+public function getSoldeRepas() : array
+{
+    return[
+      new TwigFunction('cats',[$this,'SoldeRepas'])  
+    ];
+}
+
+
+public function SoldeRepas()
+{
+  $totalventerepas = $this->em->getRepository(VenteRepas::class)->getNb();
+  $totaldepensevivre = $this->em->getRepository(DepenseVivre::class)->getNb();
+
+ return $totalventerepas  - $totaldepensevivre;
+        
 }
 
 
@@ -151,4 +216,6 @@ class CatsExtension extends AbstractExtension
 
 
 
+
+}
 ?>

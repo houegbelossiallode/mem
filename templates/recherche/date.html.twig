@@ -30,14 +30,13 @@
 <form class="form-horizontal">
       <div class="table-responsive">
         <table class="table table-bordered table-striped table-highlight">
+        
                           <thead>
                               <tr>
                                   <th>Boisson</th>
-                                  
-                                  
                                   <th>Quantité Vendue</th>
-                                  <th>Total vendue</th>
-                                      
+                                  <th>Prix de vente</th>
+                                  <th>Total par boisson</th>
                               </tr>
                           </thead>
                           
@@ -51,18 +50,14 @@
                               {% for donnee in donnees %}
                                   <tr>
                                       
-                                      <td>{{ donnee.designation }}</td>
+                                      <td>{{donnee.designation }}</td>
+                                      <td>{{donnee.quantite}}</td>
+                                      <td>{{donnee.prix_vente}}</td>
+                                      <td>{{donnee.total}}</td>
+                                        
                                       
-                                      
-                                      <td>{{ donnee.quantite}}</td>
-                                      <td></td>
-                                      
-                                      <td>
-                                          
-                                          
-                                      </td>
-                                    
                                   </tr>
+                                  
                                   {% endfor %}
                                   
                                   
@@ -73,8 +68,9 @@
                  
               </div>
           </form>
-
-
+          
+        <h1 class="text text-right">Total:  </h1>
+         
 </div>
 
 {% endblock %}

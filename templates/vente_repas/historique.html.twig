@@ -1,0 +1,50 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}VenteDrink index{% endblock %}
+
+{% block pagetitle %}Historiques des ventes annuler{% endblock %}
+{% block body %}
+
+<div class="container-fluid" >
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+<div class="card-body table-responsive">
+<div class="container" >
+
+     <div class="row">
+    <table class="table table-bordered table-striped table-highlight">
+
+        <thead>
+            <tr>
+                <th>Accompagnement</th>
+                <th>Protéines</th>
+                <th>Prix de vente</th>
+                <th>Quantité vendue</th>
+                <th>Montant</th>
+                <th>Auteur</th>
+                <th>Date de la vente</th>
+                 
+            </tr>
+        </thead>
+        <tbody>
+            {% for cat in cats.getRepasAnnuler() %}
+            <tr>
+            <td>{{cat.accompagnement}}</td>
+                <td>{{cat.name}}</td>
+                <td>{{cat.prix_vente}}</td>
+                <td>{{cat.qte_vendue}}</td>
+                <td>{{cat.montant}}</td>
+                <td>{{cat.nom}}</td>
+                <td>{{cat.date|date('d-m-Y')}}</td>
+          </td>
+           </tr>
+       
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+    
+
+
+{% endblock %}

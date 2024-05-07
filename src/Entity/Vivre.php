@@ -5,9 +5,11 @@ namespace App\Entity;
 use App\Repository\VivreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VivreRepository::class)]
+#[UniqueEntity(fields: ['proteine'], message: 'Ce nom existe déjà')]
 class Vivre
 {
     #[ORM\Id]
@@ -15,17 +17,16 @@ class Vivre
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $designation = null;
+   
 
     #[ORM\Column(length: 50,nullable:true)]
     private ?string $qte_stock = null;
 
-    #[ORM\Column(length: 50,nullable:true)]
-    private ?string $qte_sortir = null;
-
     #[ORM\OneToMany(targetEntity: QuantiteAjoute::class, mappedBy: 'vivre')]
     private Collection $quantiteAjoutes;
+
+    #[ORM\ManyToOne(inversedBy: 'vivres')]
+    private ?Proteine $proteine = null;
 
     public function __construct()
     {
@@ -37,17 +38,7 @@ class Vivre
         return $this->id;
     }
 
-    public function getDesignation(): ?string
-    {
-        return $this->designation;
-    }
-
-    public function setDesignation(string $designation): static
-    {
-        $this->designation = $designation;
-
-        return $this;
-    }
+   
 
     public function getQteStock(): ?string
     {
@@ -61,17 +52,7 @@ class Vivre
         return $this;
     }
 
-    public function getQteSortir(): ?string
-    {
-        return $this->qte_sortir;
-    }
-
-    public function setQteSortir(string $qte_sortir): static
-    {
-        $this->qte_sortir = $qte_sortir;
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection<int, QuantiteAjoute>
@@ -99,6 +80,18 @@ class Vivre
                 $quantiteAjoute->setVivre(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProteine(): ?Proteine
+    {
+        return $this->proteine;
+    }
+
+    public function setProteine(?Proteine $proteine): static
+    {
+        $this->proteine = $proteine;
 
         return $this;
     }

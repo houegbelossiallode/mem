@@ -93,18 +93,19 @@ class VenteDrinkRepository extends ServiceEntityRepository
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
         return $this->createQueryBuilder('v')
-            ->select(' b.designation','b.Seuil','SUM(v.quantite_boisson_vendue) AS quantite')
+            ->select(' b.designation','v.prix_vente','SUM(v.quantite_boisson_vendue) AS quantite','SUM(v.montant) AS total')
             ->innerJoin('v.boisson','b')
             ->where('v.Statut IS NULL')
             ->andWhere('v.date =:date')
             ->setParameter('date', $date->format('Y-m-d')) 
             ->groupBy('b.designation')
+            ->having('SUM(v.montant) > 0 ')
             ->getQuery()
             ->getResult()
         ;
     }
 
-    public function recherche($date1,$date2,)
+    public function recherche($date1,$date2)
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
         return $this->createQueryBuilder('v')
@@ -139,7 +140,7 @@ class VenteDrinkRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findBylaitdeuxdate($date1,$date2,)
+    public function findBylaitdeuxdate($date1,$date2)
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
         return $this->createQueryBuilder('v')
@@ -158,6 +159,21 @@ class VenteDrinkRepository extends ServiceEntityRepository
     }
 
 
+    public function findByVenteAnnuler()
+    {
+       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+        return $this->createQueryBuilder('v')
+            ->select('v.montant','b.designation','v.quantite_boisson_vendue','v.prix_vente','u.nom','v.date')
+            ->innerJoin('v.boisson','b')
+            ->innerJoin('v.user','u')
+            ->where('v.Statut IS NOT NULL')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+
+    
     
         
 //    public function findOneBySomeField($value): ?VenteDrink

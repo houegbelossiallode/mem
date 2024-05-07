@@ -21,9 +21,13 @@ class Proteine
     #[ORM\OneToMany(targetEntity: VenteRepas::class, mappedBy: 'proteine')]
     private Collection $venteRepas;
 
+    #[ORM\OneToMany(targetEntity: Vivre::class, mappedBy: 'proteine')]
+    private Collection $vivres;
+
     public function __construct()
     {
         $this->venteRepas = new ArrayCollection();
+        $this->vivres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,6 +80,36 @@ class Proteine
     public function __toString()
     {
        return $this->nom;
+    }
+
+    /**
+     * @return Collection<int, Vivre>
+     */
+    public function getVivres(): Collection
+    {
+        return $this->vivres;
+    }
+
+    public function addVivre(Vivre $vivre): static
+    {
+        if (!$this->vivres->contains($vivre)) {
+            $this->vivres->add($vivre);
+            $vivre->setProteine($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVivre(Vivre $vivre): static
+    {
+        if ($this->vivres->removeElement($vivre)) {
+            // set the owning side to null (unless already changed)
+            if ($vivre->getProteine() === $this) {
+                $vivre->setProteine(null);
+            }
+        }
+
+        return $this;
     }
     
 }

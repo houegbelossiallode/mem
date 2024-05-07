@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Recette;
+use App\Entity\Proteine;
 use App\Entity\VenteRepas;
+use App\Entity\Vivre;
 use App\Form\VenteRepasType;
 use App\Repository\VenteRepasRepository;
+use App\Repository\VivreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,13 +21,28 @@ class VenteRepasController extends AbstractController
     #[Route('/', name: 'app_vente_repas_index', methods: ['GET'])]
     public function index(VenteRepasRepository $venteRepasRepository): Response
     {
+       $vente_repas = $venteRepasRepository->findByProteine();
+       // dd($vente_repas);
         return $this->render('vente_repas/index.html.twig', [
             'vente_repas' => $venteRepasRepository->findAll(),
         ]);
     }
 
+
+    #[Route('/historique', name: 'app_vente_repas_historique')]
+    
+    public function historique(VenteRepasRepository $venteRepasRepository): Response
+    {
+        
+        return $this->render('vente_repas/historique.html.twig',[
+            'vente_repas' => $venteRepasRepository->findAll(),
+        ]);
+    }
+
+    
+
     #[Route('/new', name: 'app_vente_repas_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,ManagerRegistry $doctrine): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,ManagerRegistry $doctrine, VivreRepository $vivreRepository ): Response
     {
         $id_user = $this->getUser();
         $venteRepa = new VenteRepas();
@@ -33,16 +50,35 @@ class VenteRepasController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           
+    
+            
+            $id_proteine = $venteRepa->getProteine()->getId();
+            $vivres = $vivreRepository->findBy(['proteine'=>$id_proteine]);
             $qte_vendue = $form->getData()->getQteVendue();
             $prix_vente = $form->getData()->getPrixVente();
             $montant = (int)$qte_vendue * (int)$prix_vente;
+            
+            if($vivres === null or $vivres === []){
+                $vivre = new Vivre();
+            }
+            else    {
+                $vivre = $vivres[0];
+            }
+              if ( $qte_vendue > $vivre->getQteStock()) {
+             $this->addFlash("error", "La quantité  n'est pas suffisante pour honorer la commande" );
+                return $this->redirectToRoute('app_vente_repas_index');
+               }
+
+
+           
             $venteRepa->setUser($id_user);
             $venteRepa->setMmontant($montant);
             $entityManager->persist($venteRepa);
             $entityManager->flush();
-            $id = $venteRepa->getId();
-            
+            $vivre->setQteStock($vivre->getQteStock() -  $qte_vendue);
+            $entityManager->persist($vivre);
+            $entityManager->flush(); 
+        
             return $this->redirectToRoute('app_vente_repas_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -100,14 +136,31 @@ class VenteRepasController extends AbstractController
 
 
     #[Route('/{id}/annuler', name: 'app_vente_repas_annuler')]
-    public function annuler(VenteRepasRepository $venteRepasRepository, ManagerRegistry $doctrine,int $id): Response
+    public function annuler(VenteRepasRepository $venteRepasRepository, ManagerRegistry $doctrine,int $id,VivreRepository $vivreRepository): Response
     {
         $repas = $venteRepasRepository->find($id); 
+        $qte_vendue = $repas->getQteVendue();
         $manager = $doctrine->getManager();
         $repas->setStatut("annuler");
         $manager->persist($repas);
         $manager->flush();
 
+
+        $id_proteine = $repas->getProteine()->getId();
+        $vivres = $vivreRepository->findBy(['proteine'=>$id_proteine]);
+
+        
+        if($vivres === null or $vivres === []){
+            $vivre = new Vivre();
+        }
+        else    {
+            $vivre = $vivres[0];
+        }
+        $manager = $doctrine->getManager();
+        $vivre->setQteStock($vivre->getQteStock() +  $qte_vendue);
+        $manager->persist($vivre);
+        $manager->flush();
+        
         return $this->redirectToRoute('app_vente_repas_index');
          
     

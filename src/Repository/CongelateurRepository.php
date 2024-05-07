@@ -40,10 +40,10 @@ class CongelateurRepository extends ServiceEntityRepository
    public function findByBoisson()
     {
         return $this->createQueryBuilder('c')
-            ->select('b.designation','c.qte_stock')
+            ->select('c.qte_stock','b.Seuil','b.type','b.designation')
             ->Join('c.boisson','b')
-            ->Where('c.qte_stock <= :Seuil')
-            ->setParameter('Seuil', 3)
+            ->Where('c.qte_stock >= b.Seuil')
+           // ->setParameter('b.Seuil', 14)
             ->getQuery()
             ->getResult()
         ;

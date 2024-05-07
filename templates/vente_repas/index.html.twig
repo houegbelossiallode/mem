@@ -4,16 +4,16 @@
 
 {% block body %}
 
+{% for flash_error in app.flashes('error') %}
+<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+{% endfor %}
+
 <style>
 .disabled{
   pointer-events: none;
 }
 </style>
 
-
-
-
-   
         <div class="container-fluid" >
         <div class="card shadow mb-4">
         <div class="card-header py-3">

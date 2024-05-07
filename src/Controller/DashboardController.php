@@ -16,14 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
-use App\Security\EmailVerifier;
-use App\Services\MailerService;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
+
 
 class DashboardController extends AbstractController
 {
@@ -41,7 +34,7 @@ class DashboardController extends AbstractController
        foreach ($venteRepas as $repas) {
           $label [] = $repas->getDate()->format('d/m/Y');
           $data [] = $repas->getMontant();
-          $vivre [] = $repas->getRepas()->getAccompagnement();
+        
        }
        
        
@@ -99,7 +92,7 @@ class DashboardController extends AbstractController
        
 
 
-       $charts = $chartBuilder->createChart(Chart::TYPE_LINE);
+       $charts = $chartBuilder->createChart(Chart::TYPE_BAR);
 
        $charts->setData([
            'labels' => $label,

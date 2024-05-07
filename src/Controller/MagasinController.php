@@ -170,7 +170,8 @@ class MagasinController extends AbstractController
         
         $congelateurs = $congelateurRepository->findBy(['boisson'=>$boisson]);
         
-        if($congelateurs === null or $congelateurs === []){
+        if($congelateurs === null or $congelateurs === [])
+        {
             $congelateur = new Congelateur();
         }
         else    {

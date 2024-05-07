@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Congelateur;
+
 use App\Entity\Recette;
 use App\Entity\VenteDrink;
 use App\Form\VenteDrinkType;
@@ -23,6 +24,16 @@ class VenteDrinkController extends AbstractController
     {
         
         return $this->render('vente_drink/index.html.twig', [
+            'vente_drinks' => $venteDrinkRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/historique', name: 'app_vente_drink_historique', methods: ['GET'])]
+    
+    public function historique(VenteDrinkRepository $venteDrinkRepository): Response
+    {
+        
+        return $this->render('vente_drink/historique.html.twig',[
             'vente_drinks' => $venteDrinkRepository->findAll(),
         ]);
     }
@@ -139,8 +150,6 @@ class VenteDrinkController extends AbstractController
         $manager->persist($vente);
         $manager->flush();
 
-       
-        
         $boisson = $vente->getBoisson()->getId();
         $congelateurs = $congelateurRepository->findBy(['boisson'=>$boisson]);
             
@@ -160,5 +169,17 @@ class VenteDrinkController extends AbstractController
         return $this->redirectToRoute('app_vente_drink_index');
     }
 
+
+
+   
+
+
+
+
+
+
+
+
+    
     
 }

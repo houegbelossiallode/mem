@@ -38,8 +38,8 @@
                 <td class="text text-center">{{ quantite_ajoute.quantiteAjoutee }}</td>
                 <td class="text text-center">{{ quantite_ajoute.quantiteSortir }}</td>
                     <td class="text text-center">
-                        {% if quantite_ajoute.vivre.designation is defined %}
-                        {{quantite_ajoute.vivre.designation }}
+                        {% if quantite_ajoute.vivre.proteine.nom is defined %}
+                        {{quantite_ajoute.vivre.proteine.nom}}
                         {% endif %}
                     </td>
 

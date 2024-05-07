@@ -19,8 +19,12 @@ class VivreController extends AbstractController
     #[Route('/', name: 'app_vivre_index', methods: ['GET'])]
     public function index(VivreRepository $vivreRepository): Response
     {
+        $vivre = $vivreRepository->findByVivre();
+        
+        
         return $this->render('vivre/index.html.twig', [
             'vivres' => $vivreRepository->findAll(),
+            'vivre'=> $vivre
         ]);
     }
 
@@ -113,11 +117,11 @@ class VivreController extends AbstractController
         $manager = $doctrine->getManager();
         $mot = $request->get('dimunier');
         if ($mot > $vivre->getQteStock()) {
-            $this->addFlash("error", "Vous êtes en rupture de pour stock le vivre  " .$vivre->getDesignation() );
+        //    $this->addFlash("error", "Vous êtes en rupture de pour stock le vivre  " .$vivre->getDesignation() );
             return $this->redirectToRoute('app_vivre_index');
            }
         $vivre->setQteStock($vivre->getQteStock() - (float)$mot);
-        $vivre->setQteSortir((float)$vivre->getQteSortir() + (float)$mot);
+       // $vivre->setQteSortir((float)$vivre->getQteSortir() + (float)$mot);
         $manager->persist($vivre);
         $manager->flush();
     

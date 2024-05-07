@@ -37,6 +37,7 @@
                                   
                                   <th>Nb casier acheté</th>
                                   <th>Prix du Casier</th>
+                                  <th>Montant</th>
                                   <th>Nombre de trou</th>
                               </tr>
                           </thead>
@@ -49,14 +50,14 @@
                               {% else %}
                               <h4 class="text text-primary">Résultats de la recherche</h4>
                               {% for donnee in donnees %}
+                              
                                   <tr>
                                       
                                       <td>{{ donnee.designation}}</td>
-                                      
                                       <td>{{ donnee.quantite_achete }}</td>
                                       <td>{{ donnee.prix_unitaire }}</td>
+                                      <td>{{ donnee.montant}}</td>
                                       <td>{{ donnee.nombre_trou }}</td>
-                                      
                                   </tr>
                                   {% endfor %}
                                   

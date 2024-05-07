@@ -36,6 +36,24 @@ class VivreRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+
+
+   public function findByVivre()
+    {
+        return $this->createQueryBuilder('v')
+            ->select('p.nom','v.qte_stock')
+            ->Join('v.proteine','p')
+            ->Where('v.qte_stock <= :Seuil')
+            ->setParameter('Seuil', 3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+
+
+
 //    public function findOneBySomeField($value): ?Vivre
 //    {
 //        return $this->createQueryBuilder('v')

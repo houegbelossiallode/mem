@@ -49,12 +49,10 @@ class RechercheController extends AbstractController
        
        if($form->isSubmitted() && $form->isValid())
        {
-        
        $date1 = $form->get('date1')->getData(); 
        $date2 = $form->get('date2')->getData(); 
-        $donnees = $venteDrinkRepository->recherche($date1,$date2);
-        
-        
+       $donnees = $venteDrinkRepository->recherche($date1,$date2);
+       // dd($donnees['designation']);
        }
         return $this->render('recherche/mois.html.twig', [
          'form'=> $form->createView(),

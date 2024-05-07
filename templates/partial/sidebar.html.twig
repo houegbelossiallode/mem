@@ -115,12 +115,6 @@
       </a>
     </li>
 
-    <li>
-      <a href="">
-        <i class="bi bi-circle"></i><span>Historiques</span>
-      </a>
-    </li>
-
   {% endif %}
 
 
@@ -130,6 +124,20 @@
         <i class="bi bi-circle"></i><span>Dépense Vivre</span>
       </a>
     </li>
+
+    <li>
+      <a href="{{path('app_vente_drink_historique')}}">
+        <i class="bi bi-circle"></i><span>Historiques des ventes boissons annuler</span>
+      </a>
+    </li>
+
+
+    <li>
+      <a href="{{path('app_vente_repas_historique')}}">
+        <i class="bi bi-circle"></i><span>Historiques des ventes repas annuler</span>
+      </a>
+    </li>
+
 {% endif %}
 
   </ul>

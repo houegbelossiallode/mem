@@ -248,6 +248,125 @@
 
 
 
+         <div class="row">
+
+         <!-- Left side columns -->
+         <div class="col-lg-12">
+           <div class="row" style="margin-top:25px;">
+ 
+             <!-- Sales Card -->
+             <div class="col-xxl-4 col-md-3 " >
+               <div class="card info-card sales-card " >
+ 
+                 <div class="filter">
+                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                     <li class="dropdown-header text-start">
+                       <h6>Filter</h6>
+                     </li>
+ 
+                     <li><a class="dropdown-item" href="">A une date donnée</a></li>
+                     <li><a class="dropdown-item" href="">Ce mois</a></li>
+                     
+                   </ul>
+                 </div>
+ 
+                 <div class="card-body">
+                   <h5 class="card-title">Solde Boisson <span>| Aujourd'hui</span></h5>
+ 
+                   <div class="d-flex align-items-center">
+                   <div class="ps-3">
+                       <h6>{{cats.SoldeBoisson}}</h6>
+                       
+                     </div>
+                     <div>
+                       <i class="bi bi-currency-francs fs-3">F</i>
+                     </div>
+                     
+                   </div>
+                 </div>
+ 
+               </div>
+             </div><!-- End Sales Card -->
+ 
+             <!-- Revenue Card -->
+             <div class="col-xxl-4 col-md-3">
+               <div class="card info-card revenue-card">
+ 
+                 <div class="filter">
+                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                     <li class="dropdown-header text-start">
+                       <h6>Filter</h6>
+                     </li>
+ 
+                   <li><a class="dropdown-item" href="">A une date donnée</a></li>
+                     <li><a class="dropdown-item" href="">Ce mois</a></li>
+                     
+                   </ul>
+                 </div>
+ 
+                 <div class="card-body">
+                   <h5 class="card-title">Solde Repas <span>| Aujourd'hui</span></h5>
+ 
+                   <div class="d-flex align-items-center">
+                   <div class="ps-3">
+                     <h6>{{cats.SoldeRepas}}</h6>
+                     </div>
+                     <div >
+                       <i class="bi bi-currency-francs fs-3">F</i>
+                     </div>
+                     
+                   </div>
+                 </div>
+ 
+               </div>
+             </div><!-- End Revenue Card -->
+ 
+ 
+ 
+             <!-- Left side columns -->
+ 
+ 
+             <!-- Sales Card -->
+             <div class="col-xxl-4 col-md-3">
+                 <div class="card info-card sales-card">
+ 
+                 <div class="filter">
+                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                     <li class="dropdown-header text-start">
+                         <h6>Filter</h6>
+                     </li>
+ 
+                     <li><a class="dropdown-item" href="#">Aujourd'hui</a></li>
+                     <li><a class="dropdown-item" href="#">Ce mois</a></li>
+                     
+                     </ul>
+                 </div>
+ 
+                 <div class="card-body">
+                     <h5 class="card-title">Trésorerie Boisson <span>| Today</span></h5>
+ 
+                     <div class="d-flex align-items-center">
+                     <div class="ps-3">
+                         <h6></h6>
+                     </div>
+                     <div >
+                       <i class="bi bi-currency-francs fs-3">F</i>
+                     </div>
+                     
+                     </div>
+                 </div>
+ 
+                 </div>
+             </div><!-- End Sales Card -->
+
+
+
+         
+
+
 
 
 
@@ -269,7 +388,13 @@
                 
                   <h5 class="card-title">Evolution de la vente des boissons</h5>
 
+                  <div id="reportsChart">
+
                   {{ render_chart(chart, {'class': 'my-chart'}) }}
+
+                  </div>
+
+                  
 
                 </div>
 

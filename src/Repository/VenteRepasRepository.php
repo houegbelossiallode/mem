@@ -41,7 +41,7 @@ class VenteRepasRepository extends ServiceEntityRepository
         {
             $now = new \DateTime();
             $qb = $this->createQueryBuilder('v')
-                ->select('SUM(v.prix_vente)  AS total')
+                ->select('SUM(v.montant)  AS total')
                 ->where('v.statut IS NULL')
                 ->andWhere('v.date =:date')
                 ->setParameter('date', $now->format('Y-m-d'))
@@ -86,13 +86,34 @@ class VenteRepasRepository extends ServiceEntityRepository
     }
 
 
+    public function findByRepasAnnuler()
+    {
+       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+        return $this->createQueryBuilder('v')
+            ->select('r.accompagnement','(p.nom) AS name','v.prix_vente','v.qte_vendue','u.nom','v.date','v.montant')
+            ->leftJoin('v.repas','r')
+            ->leftJoin('v.proteine','p')
+            ->leftJoin('v.user','u')
+            ->where('v.statut IS NOT NULL')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 
-
-
-
-
-
+    public function findByProteine()
+    {
+       
+        return $this->createQueryBuilder('v')
+            ->select('SUM(v.qte_vendue) AS nbproteine','p.nom')
+            ->leftJoin('v.proteine','p')
+            ->where('v.statut IS NULL')
+            ->andWhere('v.proteine IS NOT NULL')
+            ->groupBy('p.nom')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
         
 //    public function findOneBySomeField($value): ?VenteRepas
 //    {

@@ -24,12 +24,10 @@ class CongelateurController extends AbstractController
         $user = new User();
         $user = $this->getUser();
         $conge = $congelateurRepository->findByBoisson();
-        
+      //  dd($conge);
         foreach ($conge as $conges)
         {  
-            
         $mavariable = $conges["designation"];
-          
         $to = $user->getEmail();
         $subject = 'Listes des boissons à réapprovisionner ';
         $email = (new TemplatedEmail())

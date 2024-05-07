@@ -1,12 +1,23 @@
 {% extends 'template.html.twig' %}
 {% block title %}Vivre index{% endblock %}
-{% block pagetitle %}Listes des vivres{% endblock %}
+
 {% block body %}
 
 {% for flash_error in app.flashes('error') %}
 <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 {% endfor %}
 
+
+{% if vivre |length > 0 %}
+<h3 class="pagetitle">Listes des Vivres à réapprovisionner</h3>
+<h4 class="alert alert-danger">
+  {% for vivres in vivre %}
+  {{ vivres.nom}}
+  {% endfor %}
+  </h4>
+  {% endif %}
+ 
+  
     <div class="container-fluid" >
     <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -14,15 +25,13 @@
     <div class="container" >
     <div class="row">
     <table class="table table-bordered table-striped table-highlight">
-<a href="{{path('app_vivre_new')}}" class="btn btn-success mb-3">Nouvelle dépense Vivre<i class="bi bi-plus"></i></a>
+<a href="{{path('app_vivre_new')}}" class="btn btn-success mb-3">Nouveau vivre<i class="bi bi-plus"></i></a>
         <thead>
             <tr>
                 
                 <th>Designation</th>
                 <th>Qte en stock</th>
-                <th>Qte sortie</th>
                 <th>Ajouter</th>
-                <th>Sortie</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -30,9 +39,9 @@
         {% for vivre in vivres %}
             <tr>
                 
-                <td>{{ vivre.designation }}</td>
+                <td>{{ vivre.proteine.nom }}</td>
                 <td>{{ vivre.qteStock }}</td>
-                <td>{{ vivre.qteSortir }}</td>
+                
                     <td>
                         <form action="{{ path('add_quantite_vivre', {id : vivre.id})}}" method="POST">
                          <div>
@@ -42,14 +51,7 @@
                        </form>
                        </td>
     
-                       <td>
-                        <form action="{{ path('drop_quantite_vivre', {id : vivre.id})}}" method="POST">
-                         <div>
-                           <input type="text" name="dimunier" id="drop" class="form-control" placeholder="Quantité Sortie">  
-                               </div>
-                           <button type="submit" class="btn btn-sm btn-outline-primary">sortir</button>
-                       </form>
-                       </td>
+                       
                 <td>
                     <a href="{{ path('app_vivre_show', {'id': vivre.id}) }}">show</a>
                     <a href="{{ path('app_vivre_edit', {'id': vivre.id}) }}">edit</a>
@@ -63,5 +65,5 @@
         </tbody>
     </table>
 
-    <a href="">Create new</a>
+    
 {% endblock %}
