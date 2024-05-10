@@ -14,7 +14,9 @@ class RepasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('accompagnement')
+            ->add('accompagnement',TextType::class,[
+                'attr' => array('class'=> 'text-uppercase'),
+            ])
            
             ->add('VALIDER',SubmitType::class)
         ;

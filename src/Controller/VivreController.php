@@ -12,15 +12,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
+use App\Entity\User;
 
 #[Route('/vivre')]
 class VivreController extends AbstractController
 {
     #[Route('/', name: 'app_vivre_index', methods: ['GET'])]
-    public function index(VivreRepository $vivreRepository): Response
+    public function index(VivreRepository $vivreRepository,MailerInterface $mailer): Response
     {
         $vivre = $vivreRepository->findByVivre();
+        $user = $this->getUser();
         
+       // Envoi du message d'alerte par mail    
+       $to = $user->getEmail();
+       $subject = 'Listes des vivres à réapprovisionner ';
+       $email = (new TemplatedEmail())
+       ->from(new Address('houegbelossiallode@gmail.com', 'Administratrice'))
+       ->to($to)
+       ->subject($subject)
+       ->htmlTemplate('vivre/email.html.twig')
+       ->context([
+        'vivre'=> $vivre
+       ]);
+
+       $mailer->send($email);
+
         
         return $this->render('vivre/index.html.twig', [
             'vivres' => $vivreRepository->findAll(),
@@ -74,12 +93,18 @@ class VivreController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_vivre_delete', methods: ['POST'])]
-    public function delete(Request $request, Vivre $vivre, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_vivre_delete')]
+    public function delete(Vivre $vivre,ManagerRegistry $doctrine,int $id): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$vivre->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($vivre);
-            $entityManager->flush();
+        $vivre = new Vivre();
+        $vivre = $doctrine->getRepository(Vivre::class)->find($id);
+   
+        if($vivre)
+        {
+            $manager = $doctrine->getManager();
+            $manager->remove($vivre);
+            $manager->flush();
+            $this->addFlash("success","Suppression réussi");
         }
 
         return $this->redirectToRoute('app_vivre_index', [], Response::HTTP_SEE_OTHER);

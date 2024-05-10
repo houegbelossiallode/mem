@@ -64,20 +64,33 @@ class VenteRepasController extends AbstractController
             else    {
                 $vivre = $vivres[0];
             }
-              if ( $qte_vendue > $vivre->getQteStock()) {
-             $this->addFlash("error", "La quantité  n'est pas suffisante pour honorer la commande" );
+
+
+            if (!$vivre->getProteine()) {
+                $this->addFlash("error", "Ce vivre "  . $venteRepa->getProteine()->getNom().  " n'est pas dans le congelateur " );
+                
                 return $this->redirectToRoute('app_vente_repas_index');
+               }
+            
+              elseif ( $qte_vendue > $vivre->getQteStock()) {
+               $this->addFlash("error", "La quantité de " .$vivre->getProteine(). "  n'est pas suffisante pour honorer la commande" );
+                return $this->redirectToRoute('app_vente_repas_index');
+               }
+               else
+               {
+                
+                $venteRepa->setUser($id_user);
+                $venteRepa->setMmontant($montant);
+                $entityManager->persist($venteRepa);
+                $entityManager->flush();
+                $vivre->setQteStock($vivre->getQteStock() -  $qte_vendue);
+                $entityManager->persist($vivre);
+                $entityManager->flush(); 
+                
                }
 
 
            
-            $venteRepa->setUser($id_user);
-            $venteRepa->setMmontant($montant);
-            $entityManager->persist($venteRepa);
-            $entityManager->flush();
-            $vivre->setQteStock($vivre->getQteStock() -  $qte_vendue);
-            $entityManager->persist($vivre);
-            $entityManager->flush(); 
         
             return $this->redirectToRoute('app_vente_repas_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -118,7 +131,7 @@ class VenteRepasController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'app_vente_repas_delete')]
-    public function delete(Request $request, ManagerRegistry $doctrine,int $id): Response
+    public function delete(ManagerRegistry $doctrine,int $id): Response
     {
         $vente_repas = new VenteRepas();
         $vente_repas = $doctrine->getRepository(VenteRepas::class)->find($id);

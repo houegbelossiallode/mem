@@ -70,7 +70,7 @@ class VenteDrinkController extends AbstractController
             $manager = $doctrine->getManager();
             
             if (!$congelateur->getBoisson()) {
-                $this->addFlash("success", " Cette boisson"  .$congelateur->getBoisson().  " n'est pas dans le congelateur " );
+                $this->addFlash("success", "La boisson  "  . $venteDrink->getBoisson()->getDesignation().  " n'est pas dans le congelateur " );
                 
                 return $this->redirectToRoute('app_vente_drink_index');
                }
@@ -126,12 +126,18 @@ class VenteDrinkController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_vente_drink_delete', methods: ['POST'])]
-    public function delete(Request $request, VenteDrink $venteDrink, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_vente_drink_delete')]
+    public function delete(VenteDrink $venteDrink,ManagerRegistry $doctrine,int $id): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$venteDrink->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($venteDrink);
-            $entityManager->flush();
+        $venteDrink = new VenteDrink();
+        $venteDrink = $doctrine->getRepository(VenteDrink::class)->find($id);
+   
+        if($venteDrink)
+        {
+            $manager = $doctrine->getManager();
+            $manager->remove($venteDrink);
+            $manager->flush();
+            $this->addFlash("success","Suppression réussi");
         }
 
         return $this->redirectToRoute('app_vente_drink_index', [], Response::HTTP_SEE_OTHER);

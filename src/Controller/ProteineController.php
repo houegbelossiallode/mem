@@ -6,6 +6,7 @@ use App\Entity\Proteine;
 use App\Form\ProteineType;
 use App\Repository\ProteineRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,12 +69,20 @@ class ProteineController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_proteine_delete', methods: ['POST'])]
-    public function delete(Request $request, Proteine $proteine, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_proteine_delete')]
+    public function delete(ManagerRegistry $doctrine,$id): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$proteine->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($proteine);
-            $entityManager->flush();
+       
+        $proteine = new Proteine();
+        $proteine = $doctrine->getRepository(Proteine::class)->find($id);
+   
+        if($proteine)
+        {
+            $manager = $doctrine->getManager();
+            $manager->remove($proteine);
+            $manager->flush();
+            $this->addFlash("success","Suppression réussi");
+        
         }
 
         return $this->redirectToRoute('app_proteine_index', [], Response::HTTP_SEE_OTHER);

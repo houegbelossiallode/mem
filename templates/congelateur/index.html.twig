@@ -31,12 +31,12 @@
 <div class="container" >
      <div class="row">
     <table class="table table-bordered table-striped table-highlight">
-<a href="{{ path('app_congelateur_new') }}" class="btn btn-success mb-3">Nouvelle<i class="bi bi-plus"></i></a>
+ <!-- <a href="{{ path('app_congelateur_new') }}" class="btn btn-success mb-3">Nouvelle<i class="bi bi-plus"></i></a>  --> 
         <thead>
             <tr>
                 <th>Boisson</th>
                 <th>Qte en stock</th>
-                <th>actions</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -44,10 +44,7 @@
             <tr>
                 <td>{{ congelateur.boisson.designation }}</td>
                 <td>{{ congelateur.qteStock }}</td>
-                <td>
-                    <a href="{{ path('app_congelateur_show', {'id': congelateur.id}) }}">show</a>
-                    <a href="{{ path('app_congelateur_edit', {'id': congelateur.id}) }}">edit</a>
-                </td>
+            
             </tr>
         {% else %}
             <tr>

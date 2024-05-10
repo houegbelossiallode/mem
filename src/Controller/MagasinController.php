@@ -30,12 +30,7 @@ class MagasinController extends AbstractController
         $magasin = $magasinRepository->findByBoisson();
         $user = $this->getUser();
         
-        foreach ($magasin as $magasins) 
-        {  
-        $mavariable = $magasins["designation"];
-       // $this->addFlash("critique", "Listes des boissons à approvisionner  " . $mavariable . " , " );
-       // echo    $mavariable . ' , ';
-       
+       // Envoi du message d'alerte par mail    
        $to = $user->getEmail();
        $subject = 'Listes des boissons à réapprovisionner ';
        $email = (new TemplatedEmail())
@@ -46,8 +41,6 @@ class MagasinController extends AbstractController
        ->context([
         'magasin'=> $magasin
        ]);
-       
-       }
 
        $mailer->send($email);
 

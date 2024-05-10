@@ -5,7 +5,9 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -17,8 +19,12 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
-            ->add('nom')
+            ->add('email',EmailType::class,[
+                'invalid_message' => 'Adresse email invalide'
+            ])
+            ->add('nom',TextType::class,[
+                'attr' => array('class'=> 'text-uppercase'),
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label'=> "Jaccepte les conditions d'utilisation de ce site.",
                 'mapped' => false,
@@ -39,7 +45,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Vôtre mot de passe doit contenir 6 caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),

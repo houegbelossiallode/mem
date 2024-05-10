@@ -23,18 +23,16 @@ class Boisson
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\OneToMany(targetEntity: DepenseAppro::class, mappedBy: 'boisson')]
+    #[ORM\OneToMany(targetEntity: DepenseAppro::class, mappedBy: 'boisson',orphanRemoval: true, cascade: ['persist'])]
     private Collection $depenseAppros;
 
-    
-
-    #[ORM\OneToMany(targetEntity: Magasin::class, mappedBy: 'boisson')]
+    #[ORM\OneToMany(targetEntity: Magasin::class, mappedBy: 'boisson',orphanRemoval: true, cascade: ['persist'])]
     private Collection $magasins;
 
-    #[ORM\OneToMany(targetEntity: VenteDrink::class, mappedBy: 'boisson')]
+    #[ORM\OneToMany(targetEntity: VenteDrink::class, mappedBy: 'boisson',orphanRemoval: true, cascade: ['persist'])]
     private Collection $venteDrinks;
 
-    #[ORM\OneToMany(targetEntity: Congelateur::class, mappedBy: 'boisson')]
+    #[ORM\OneToMany(targetEntity: Congelateur::class, mappedBy: 'boisson',orphanRemoval: true, cascade: ['persist'])]
     private Collection $congelateurs;
 
     #[ORM\Column(length: 10)]

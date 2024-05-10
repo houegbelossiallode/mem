@@ -20,9 +20,9 @@
         <div class="card-body table-responsive">
         <div class="container" >
 
-     <div class="row">
+      <div class="row">
       <table class="table table-bordered table-striped table-highlight">
-
+      <a href="{{path('app_vente_repas_new')}}" class="btn btn-success mb-3">Nouvelle vente<i class="bi bi-plus"></i></a>
         <thead>
             <tr>
                 
@@ -88,6 +88,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_vente_repas_new') }}">Create new</a>
 {% endblock %}

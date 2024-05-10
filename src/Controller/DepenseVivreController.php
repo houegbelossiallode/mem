@@ -6,6 +6,7 @@ use App\Entity\DepenseVivre;
 use App\Form\DepenseVivreType;
 use App\Repository\DepenseVivreRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,13 +69,20 @@ class DepenseVivreController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_depense_vivre_delete', methods: ['POST'])]
-    public function delete(Request $request, DepenseVivre $depenseVivre, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_depense_vivre_delete')]
+    public function delete(Request $request, DepenseVivre $depenseVivre,ManagerRegistry $doctrine,int $id ): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$depenseVivre->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($depenseVivre);
-            $entityManager->flush();
+        $depenseVivre = new DepenseVivre();
+        $depenseVivre = $doctrine->getRepository(DepenseVivre::class)->find($id);
+   
+        if($depenseVivre)
+        {
+            $manager = $doctrine->getManager();
+            $manager->remove($depenseVivre);
+            $manager->flush();
+            $this->addFlash("success","Suppression réussi");
         }
+        
 
         return $this->redirectToRoute('app_depense_vivre_index', [], Response::HTTP_SEE_OTHER);
     }

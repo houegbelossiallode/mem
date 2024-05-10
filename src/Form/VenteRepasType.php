@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -41,8 +42,12 @@ class VenteRepasType extends AbstractType
                 ->orderBy('p.nom', 'ASC');
             }
         ])
-            ->add('prix_vente')
-            ->add('qte_vendue')
+            ->add('prix_vente',NumberType::class,[
+                'invalid_message' => 'Saisissez des chiffers uniquement',
+            ])
+            ->add('qte_vendue',NumberType::class,[
+                'invalid_message' => 'Saisissez des chiffers uniquement',
+            ])
             ->add('date',DateType::class,[
                 'widget' => 'single_text',
                 'label'=> 'Date' 

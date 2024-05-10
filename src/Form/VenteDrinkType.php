@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,8 +18,12 @@ class VenteDrinkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('prix_vente')
-            ->add('quantite_boisson_vendue')
+            ->add('prix_vente',NumberType::class,[
+                'invalid_message' => 'Saisissez des chiffers uniquement',
+            ])
+            ->add('quantite_boisson_vendue',NumberType::class,[
+                'invalid_message' => 'Saisissez des chiffers uniquement',
+            ])
             ->add('boisson',EntityType::class,[
                 'class'=> Boisson::class,
                 'placeholder'=> 'Choisissez une boisson',

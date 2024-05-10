@@ -8,6 +8,7 @@ use App\Repository\BoissonRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,13 +18,19 @@ class DepenseApproType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('quantite_achete')
-            ->add('prix_unitaire')
+            ->add('quantite_achete',NumberType::class,[
+                'invalid_message' => 'Saisissez des chiffers uniquement',
+            ])
+            ->add('prix_unitaire',NumberType::class,[
+                'invalid_message' => 'Saisissez des chiffers uniquement',
+            ])
             ->add('date',DateType::class,[
                 'widget' => 'single_text',
                 'label'=> 'Date' 
             ])
-            ->add('nombre_trou')
+            ->add('nombre_trou',NumberType::class,[
+                'invalid_message' => 'Saisissez des chiffers uniquement',
+            ])
             ->add('boisson',EntityType::class,[
                 'class'=> Boisson::class,
                 'placeholder'=> 'Choisissez une boisson',

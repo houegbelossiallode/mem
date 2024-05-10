@@ -17,7 +17,7 @@
 
 </style>
 {% for flash_error in app.flashes('success') %}
-<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+<div class="alert alert-warning" role="alert">{{ flash_error }}</div>
 {% endfor %}
 
 <div class="container-fluid" >
@@ -29,9 +29,8 @@
      <div class="row">
     <table class="table table-bordered table-striped table-highlight">
 
-<a href="{{ path('app_vente_drink_new') }}" class="btn btn-success mb-3">Nouvelle vente<i class="bi bi-plus"></i></a>
+     <a href="{{ path('app_vente_drink_new') }}" class="btn btn-success mb-3">Nouvelle vente<i class="bi bi-plus"></i></a>
 
-    
         <thead>
             <tr>
                 <th>Boisson</th>

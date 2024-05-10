@@ -25,7 +25,7 @@
                 <td>{{ proteine.nom }}</td>
                 <td>
                     <a href="{{ path('app_proteine_edit', {'id': proteine.id}) }}">MODIFIER</a>
-                    <a href="{{ path('app_proteine_delete', {'id': proteine.id}) }}">SUPPRIMER</a>
+                    <a href="{{ path('app_proteine_delete', {'id': proteine.id}) }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cet élément')">SUPPRIMER</a>
                 </td>
             </tr>
         {% else %}
