@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\CongelateurRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,6 +14,12 @@ class Congelateur
     #[ORM\Column]
     private ?int $id = null;
 
+    
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Ce champ ne doit pas contenir des chiffres'
+    )]
     #[ORM\ManyToOne(inversedBy: 'congelateurs')]
     private ?Boisson $boisson = null;
 

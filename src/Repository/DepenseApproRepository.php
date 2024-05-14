@@ -54,11 +54,12 @@ class DepenseApproRepository extends ServiceEntityRepository
         {
            // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
             return $this->createQueryBuilder('d')
-                ->select(' b.designation','b.Seuil','d.quantite_achete','d.prix_unitaire','d.nombre_trou','d.montant')
+                ->select(' b.designation','b.Seuil','SUM(d.quantite_achete)  AS quantite','SUM(d.prix_unitaire) AS prix','SUM(d.nombre_trou) AS trou','SUM(d.montant) AS total ')
                 ->innerJoin('d.boisson','b')
                 ->Where('d.date =:date')
                 ->setParameter('date', $date->format('Y-m-d')) 
-                
+                ->groupBy('b.designation')
+               // ->groupBy('d.prix_unitaire')
                 ->getQuery()
                 ->getResult()
             ;
@@ -68,12 +69,12 @@ class DepenseApproRepository extends ServiceEntityRepository
         {
            // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
             return $this->createQueryBuilder('d')
-                ->select(' b.designation','b.Seuil','d.quantite_achete','d.prix_unitaire','d.nombre_trou','d.montant')
+                ->select(' b.designation','b.Seuil','SUM(d.quantite_achete)  AS quantite','SUM(d.prix_unitaire) AS prix','SUM(d.nombre_trou) AS trou ','SUM(d.montant) AS total')
                 ->innerJoin('d.boisson','b')
                 ->Where('d.date BETWEEN :date1 AND :date2')
                 ->setParameter('date1', $date1->format('Y-m-d')) 
                 ->setParameter('date2', $date2->format('Y-m-d')) 
-                
+                ->groupBy('b.designation')
                 ->getQuery()
                 ->getResult()
             ;

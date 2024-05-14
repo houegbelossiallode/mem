@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\DepenseVivreRepository;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DepenseVivreRepository::class)]
@@ -14,6 +16,13 @@ class DepenseVivre
     #[ORM\Column]
     private ?int $id = null;
 
+
+
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Ce champ ne doit pas contenir des chiffres'
+    )]
     #[ORM\Column(length: 255)]
     private ?string $designation = null;
 

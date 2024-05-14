@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\RepasRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RepasRepository::class)]
@@ -15,10 +16,14 @@ class Repas
     #[ORM\Column]
     private ?int $id = null;
 
+
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Ce champ ne doit pas contenir des chiffres'
+    )]
     #[ORM\Column(length: 255)]
     private ?string $accompagnement = null;
-
-    
 
     #[ORM\OneToMany(targetEntity: VenteRepas::class, mappedBy: 'repas')]
     private Collection $venteRepas;

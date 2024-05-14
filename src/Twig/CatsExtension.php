@@ -186,7 +186,7 @@ public function SoldeBoisson()
  $totalventeboisson = $this->em->getRepository(VenteDrink::class)->getNb();
  $totaldepenseboisson = $this->em->getRepository(DepenseAppro::class)->getNb();
 
- return $totalventeboisson  - $totaldepenseboisson;
+ return  $soldeboisson =  $totalventeboisson  - $totaldepenseboisson;
         
 }
 
@@ -200,18 +200,29 @@ public function getSoldeRepas() : array
     ];
 }
 
-
 public function SoldeRepas()
 {
   $totalventerepas = $this->em->getRepository(VenteRepas::class)->getNb();
   $totaldepensevivre = $this->em->getRepository(DepenseVivre::class)->getNb();
-
- return $totalventerepas  - $totaldepensevivre;
-        
+  return $totalventerepas  - $totaldepensevivre;    
 }
 
 
+public function getTresorerieBoisson() : array
+{
+    return[
+      new TwigFunction('cats',[$this,'TresorerieBoisson'])  
+    ];
+}
 
+public function TresorerieBoisson()
+{
+  $tresorerie= 0;
+  $totalventeboisson = $this->em->getRepository(VenteDrink::class)->getNb();
+  $totaldepenseboisson = $this->em->getRepository(DepenseAppro::class)->getNb();
+  $soldeboisson =  $totalventeboisson  - $totaldepenseboisson;
+  return $tresorerie +=  $soldeboisson;
+}
 
 
 

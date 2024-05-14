@@ -6,6 +6,7 @@ use App\Repository\BoissonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: BoissonRepository::class)]
@@ -16,6 +17,12 @@ class Boisson
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Ce champ ne doit pas contenir des chiffres'
+    )]
 
     #[ORM\Column(length: 255,unique: true)]
     private ?string $designation = null;

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\DepenseVivre;
 use App\Form\PeriodeType;
 use App\Form\RecherchemoisType;
 use App\Repository\DepenseApproRepository;
@@ -158,8 +159,6 @@ class RechercheController extends AbstractController
     }
 
 
-
-
     #[Route('/depense_vivre/date', name: 'depense_date_vivre')]
     public function datedepensevivre(Request $request,DepenseVivreRepository $depenseVivreRepository): Response
     {
@@ -279,6 +278,106 @@ class RechercheController extends AbstractController
 
 
 
+
+    #[Route('/recherche/solde_date', name: 'recherche_solde_date')]
+    public function soldedate(Request $request,VenteDrinkRepository $venteDrinkRepository,DepenseApproRepository $depenseApproRepository ): Response
+    {
+       $donnees = array('montant'=>0);
+       $form = $this->createForm(PeriodeType::class);
+       $form->handleRequest($request);
+       
+       if($form->isSubmitted() && $form->isValid())
+       {
+        $date = $form->get('date')->getData(); 
+        $donnees_depense = $depenseApproRepository->unedate($date);
+        $donnees_vente_boisson = $venteDrinkRepository->unedate($date);
+        $total_depense = 0;
+            foreach($donnees_depense as $depense){
+                $total_depense +=$depense['total']; 
+            }
+            $total_vente = 0;
+        
+            foreach($donnees_vente_boisson as $vente){
+                $total_vente +=$vente['total']; 
+            }
+        
+        $donnees['montant'] = $total_vente -  $total_depense; 
+
+       }
+        return $this->render('recherche/solde_date.html.twig', [
+         'form'=> $form->createView(),
+         'donnees'=> $donnees,
+        ]);
+    }
+
+    
+
+    #[Route('/recherche/solde_mois', name: 'recherche_solde_mois')]
+    public function soldemois(Request $request,VenteDrinkRepository $venteDrinkRepository,DepenseApproRepository $depenseApproRepository ): Response
+    {
+       $donnees = array('montant'=>0);
+       $form = $this->createForm(RecherchemoisType::class);
+       $form->handleRequest($request);
+       
+       if($form->isSubmitted() && $form->isValid())
+       {
+        $date1 = $form->get('date1')->getData(); 
+        $date2 = $form->get('date2')->getData(); 
+        $donnees_depense = $depenseApproRepository->recherche($date1,$date2);
+        $donnees_vente_boisson = $venteDrinkRepository->recherche($date1,$date2);
+        $total_depense = 0;
+            foreach($donnees_depense as $depense){
+                $total_depense +=$depense['total']; 
+            }
+            $total_vente = 0;
+        
+            foreach($donnees_vente_boisson as $vente){
+                $total_vente +=$vente['total']; 
+            }
+        
+        $donnees['montant'] = $total_vente -  $total_depense; 
+
+       }
+        return $this->render('recherche/solde_mois.html.twig', [
+         'form'=> $form->createView(),
+         'donnees'=> $donnees,
+        ]);
+    }
+
+
+
+    #[Route('/recherche/solde_repas_date', name: 'recherche_solde_repas_date')]
+    public function solderepasdate(Request $request,DepenseVivreRepository $depenseVivreRepository,VenteRepasRepository $venteRepasRepository ): Response
+    {
+       $donnees = array('montant'=>0);
+       $form = $this->createForm(PeriodeType::class);
+       $form->handleRequest($request);
+       
+       if($form->isSubmitted() && $form->isValid())
+       {
+        $date = $form->get('date')->getData(); 
+        $donnees_depense_vivre = $depenseVivreRepository->unedate($date);
+        $donnees_vente_repas =  $venteRepasRepository->unedate($date);
+        $total_depense = 0;
+            foreach($donnees_depense_vivre as $key=>$depense){
+                $total_depense +=$depense['prix']; 
+            }
+            $total_vente = 0;
+        
+            foreach($donnees_vente_repas as $key=>$vente){
+                $total_vente +=$vente['prix_vente']; 
+            }
+        $donnees['montant'] = $total_vente -  $total_depense; 
+
+       }
+        return $this->render('recherche/solde_repas_date.html.twig', [
+         'form'=> $form->createView(),
+         'donnees'=> $donnees,
+        ]);
+    }
+
+
+    
     
 
 

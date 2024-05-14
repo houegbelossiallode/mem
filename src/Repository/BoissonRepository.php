@@ -24,10 +24,10 @@ class BoissonRepository extends ServiceEntityRepository
 //    /**
 //     * @return Boisson[] Returns an array of Boisson objects
 //     */
-    public function findByBoissonTest()
+    public function findByBoisson()
     {
         return $this->createQueryBuilder('b')
-             
+
              ->innerJoin('b.magasins','m')
              ->Where('m.quantite_stock = b.Seuil')
              ->getQuery()
@@ -36,7 +36,18 @@ class BoissonRepository extends ServiceEntityRepository
     }
 
 
-
+    
+        
+       //     ->select('b.designation','m.quantite_stock')
+       //     ->leftJoin('m.boisson','b')
+       //     ->Where('m.quantite_stock <= b.Seuil')
+        //    ->orWhere('m.quantite_stock < b.Seuil')
+        //    ->setParameter('b.Seuil', 'b.Seuil')
+        //    ->setParameter('Seuil', 'b.Seuil')
+        //    ->getQuery()
+       //     ->getResult()
+      //  ;
+   // }
 
 //    public function findOneBySomeField($value): ?Boisson
 //    {

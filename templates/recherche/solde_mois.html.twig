@@ -27,50 +27,33 @@
 <div class="col-10">
 
 
-{% if app.request.method == 'POST' %}
 <form class="form-horizontal">
       <div class="table-responsive">
         <table class="table table-bordered table-striped table-highlight">
+        
                           <thead>
                               <tr>
-                                  <th>Boisson</th>
-                                  <th>Quantité achetée</th>
-                                  <th>Prix du Casier</th>
-                                  <th>Montant</th>
-                                  <th>Nombre de trou</th>
+                                  
+                                  <th>Total</th>
                               </tr>
                           </thead>
                           
-                              
-                         
                           <tbody>
                               {% if donnees |length == 0 %}
-                          <h4 class="text text-primary">Aucun resultats pour la recherche</h4>
+                          <h4>Aucun resultats pour la recherche</h4>
                               {% else %}
                               <h4 class="text text-primary">Résultats de la recherche</h4>
-                              {% for donnee in donnees %}
+                              
                                   <tr>
-                                      
-                                      <td>{{ donnee.designation}}</td>
-                                      <td>{{ donnee.quantite}}</td>
-                                      <td>{{ donnee.prix}}</td>
-                                      <td>{{ donnee.total}}</td>
-                                      <td>{{ donnee.trou }}</td>
-                                      
+                                      <td>{{donnees.montant}}</td>
                                   </tr>
-                                  {% endfor %}
-                                  
                                   
                               {% endif %}
                           </tbody>
                       
                       </table>
-                 
               </div>
           </form>
-          {% endif %}
-
-
 </div>
 
 {% endblock %}

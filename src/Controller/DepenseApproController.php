@@ -19,7 +19,7 @@ class DepenseApproController extends AbstractController
     #[Route('/', name: 'app_depense_appro_index', methods: ['GET'])]
     public function index(DepenseApproRepository $depenseApproRepository): Response
     {
-        $depense = $depenseApproRepository->getNb();
+       // $depense = $depenseApproRepository->getNb();
         
         return $this->render('depense_appro/index.html.twig', [
             'depense_appros' => $depenseApproRepository->findAll(),
