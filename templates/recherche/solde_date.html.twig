@@ -15,12 +15,12 @@
 
 {{ form_start(form) }}
 <div class="row">
-<div class="col-2">{{ form_row(form.date) }}</div>
+<div class="col-12">{{ form_row(form.date) }}</div>
 </div>
 
 {{ form_end(form) }}
 
-<div class="col-10">
+<div class="col-12">
 
 
 <form class="form-horizontal">
@@ -45,7 +45,7 @@
                                   <tr>
                                       
                                      
-                                      <td>{{donnees.montant}}</td>
+                                      <td class="fs-1">{{donnees.montant}}</td>
                                         
                                       
                                   </tr>
@@ -61,7 +61,6 @@
               </div>
           </form>
       
-         
 </div>
 
 {% endblock %}

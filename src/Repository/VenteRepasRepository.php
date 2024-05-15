@@ -51,13 +51,12 @@ class VenteRepasRepository extends ServiceEntityRepository
         }  
 
 
-
-  
+       
         public function unedate($date)
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
         return $this->createQueryBuilder('v')
-            ->select('r.accompagnement','p.nom','v.prix_vente')
+            ->select('r.accompagnement','p.nom','v.prix_vente','SUM(v.montant) AS total')
             ->leftJoin('v.repas','r')
             ->leftJoin('v.proteine','p')
             ->where('v.statut IS NULL')
@@ -72,7 +71,7 @@ class VenteRepasRepository extends ServiceEntityRepository
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
         return $this->createQueryBuilder('v')
-            ->select('r.accompagnement','p.nom','v.prix_vente')
+            ->select('r.accompagnement','p.nom','v.prix_vente','SUM(v.montant) AS total')
             ->leftJoin('v.repas','r')
             ->leftJoin('v.proteine','p')
             ->where('v.statut IS NULL')
@@ -101,6 +100,10 @@ class VenteRepasRepository extends ServiceEntityRepository
     }
 
 
+
+    
+
+    
     public function findByProteine()
     {
        

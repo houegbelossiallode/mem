@@ -29,7 +29,7 @@ class BoissonRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
 
              ->innerJoin('b.magasins','m')
-             ->Where('m.quantite_stock = b.Seuil')
+             ->Where('m.quantite_stock < b.Seuil')
              ->getQuery()
              ->getResult()
         ;

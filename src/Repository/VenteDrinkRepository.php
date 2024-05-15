@@ -56,7 +56,9 @@ class VenteDrinkRepository extends ServiceEntityRepository
         }       
 
 
+        
 
+        
         public function getNbLait()
         {
             $now = new \DateTime();
@@ -172,6 +174,21 @@ class VenteDrinkRepository extends ServiceEntityRepository
         ;
     }
     
+
+
+    public function countByTresorerie()
+        {
+            $now = new \DateTime();
+            $qb = $this->createQueryBuilder('v')
+                ->select('SUM(v.montant)  AS total')
+                ->where('v.Statut IS NULL')
+               // ->andWhere('v.date =:date')
+              //  ->setParameter('date', $now->format('Y-m-d'))
+                ->getQuery()
+                ->getSingleScalarResult();
+                
+                return $qb;
+        }
 
     
     

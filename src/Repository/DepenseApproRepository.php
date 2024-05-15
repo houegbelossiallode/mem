@@ -82,7 +82,17 @@ class DepenseApproRepository extends ServiceEntityRepository
 
 
 
-
+        public function countByTresorerie()
+        {
+            $now = new \DateTime();
+            $qb = $this->createQueryBuilder('d')
+                ->select('SUM(d.montant)  AS total')
+               // ->andWhere('d.date =:date')
+               // ->setParameter('date', $now->format('Y-m-d'))
+                ->getQuery()
+                ->getSingleScalarResult(); 
+                return $qb;
+        }  
 
 
 

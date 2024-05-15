@@ -16,15 +16,13 @@
 {{ form_start(form) }}
 <div class="row">
 
-<div class="col-2">{{ form_row(form.date) }}</div>
+<div class="col-12">{{ form_row(form.date) }}</div>
 
 </div>
 
 {{ form_end(form) }}
 
-
-
-<div class="col-10">
+<div class="col-12">
 
 
 {% if app.request.method == 'POST' %}
@@ -35,14 +33,10 @@
                               <tr>
                                   <th>Repas</th>
                                   <th>Protéine</th>
-                                  <th>Prix de vente</th>
-                                  
-                                      
+                                  <th>Prix de vente</th>     
                               </tr>
                           </thead>
                           
-                        
-                         
                           <tbody>
                               {% if donnees |length == 0 %}
                           <h4>Aucun resultats pour la recherche</h4>

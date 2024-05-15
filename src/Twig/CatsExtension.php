@@ -218,8 +218,8 @@ public function getTresorerieBoisson() : array
 public function TresorerieBoisson()
 {
   $tresorerie= 0;
-  $totalventeboisson = $this->em->getRepository(VenteDrink::class)->getNb();
-  $totaldepenseboisson = $this->em->getRepository(DepenseAppro::class)->getNb();
+  $totalventeboisson = $this->em->getRepository(VenteDrink::class)->countByTresorerie();
+  $totaldepenseboisson = $this->em->getRepository(DepenseAppro::class)->countByTresorerie();
   $soldeboisson =  $totalventeboisson  - $totaldepenseboisson;
   return $tresorerie +=  $soldeboisson;
 }

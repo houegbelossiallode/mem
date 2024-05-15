@@ -7,6 +7,7 @@ use App\Entity\Magasin;
 use App\Entity\QuantiteAjoute;
 use App\Entity\User;
 use App\Form\MagasinType;
+use App\Repository\BoissonRepository;
 use App\Repository\CongelateurRepository;
 use App\Repository\MagasinRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,11 +24,10 @@ use Symfony\Component\Mime\Address;
 class MagasinController extends AbstractController
 {
     #[Route('/', name: 'app_magasin_index', methods: ['GET'])] 
-    public function index(MagasinRepository $magasinRepository,MailerInterface $mailer): Response
+    public function index(MagasinRepository $magasinRepository,MailerInterface $mailer,BoissonRepository $boissonRepository): Response
     {
         $user = new User();
-        $magasin  = new Magasin();
-        $magasin = $magasinRepository->findByBoisson();
+        $boisson = $boissonRepository->findByBoisson();
         $user = $this->getUser();
         
        // Envoi du message d'alerte par mail    
@@ -39,7 +39,7 @@ class MagasinController extends AbstractController
        ->subject($subject)
        ->htmlTemplate('magasin/email.html.twig')
        ->context([
-        'magasin'=> $magasin
+        'magasin'=> $boisson
        ]);
 
        $mailer->send($email);
@@ -47,7 +47,7 @@ class MagasinController extends AbstractController
        
         return $this->render('magasin/index.html.twig', [
             'magasins' => $magasinRepository->findAll(),
-            'magasin'=>$magasin 
+            'magasin'=>$boisson
         ]);
     }
 
