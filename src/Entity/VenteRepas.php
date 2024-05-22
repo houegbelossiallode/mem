@@ -45,6 +45,9 @@ class VenteRepas
     #[ORM\Column(length: 255)]
     private ?string $montant = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $mode_paiement = null;
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -182,6 +185,18 @@ class VenteRepas
     public function setMmontant(string $montant): static
     {
         $this->montant = $montant;
+
+        return $this;
+    }
+
+    public function getModePaiement(): ?string
+    {
+        return $this->mode_paiement;
+    }
+
+    public function setModePaiement(string $mode_paiement): static
+    {
+        $this->mode_paiement = $mode_paiement;
 
         return $this;
     }

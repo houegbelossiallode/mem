@@ -43,6 +43,9 @@ class VenteDrink
     #[ORM\ManyToOne(inversedBy: 'venteDrinks')]
     private ?User $user = null;
 
+    #[ORM\Column(length: 35)]
+    private ?string $mode_paiement = null;
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -173,6 +176,18 @@ class VenteDrink
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getModePaiement(): ?string
+    {
+        return $this->mode_paiement;
+    }
+
+    public function setModePaiement(string $mode_paiement): static
+    {
+        $this->mode_paiement = $mode_paiement;
 
         return $this;
     }

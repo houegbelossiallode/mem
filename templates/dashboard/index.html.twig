@@ -16,7 +16,7 @@
           <div class="row" style="margin-top:25px;">
 
             <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-3 " >
+            <div class="col-xxl-4 col-md-4 " >
               <div class="card info-card sales-card " >
 
                 <div class="filter">
@@ -51,7 +51,7 @@
             </div><!-- End Sales Card -->
 
             <!-- Revenue Card -->
-            <div class="col-xxl-4 col-md-3">
+            <div class="col-xxl-4 col-md-4">
               <div class="card info-card revenue-card">
 
                 <div class="filter">
@@ -90,7 +90,7 @@
 
 
             <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-3">
+            <div class="col-xxl-4 col-md-4">
                 <div class="card info-card sales-card">
 
                 <div class="filter">
@@ -100,18 +100,18 @@
                         <h6>Filter</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="{{path('recette_date')}}">A une date </a></li>
-                    <li><a class="dropdown-item" href="{{path('recette_mois')}}">Ce mois</a></li>
+                    <li><a class="dropdown-item" href="">A une date </a></li>
+                    <li><a class="dropdown-item" href="">Ce mois</a></li>
                     
                     </ul>
                 </div>
 
                 <div class="card-body">
-                    <h5 class="card-title">Recette <span>| Today</span></h5>
+                    <h5 class="card-title">Trésorerie Repas<span>| Aujourd'hui</span></h5>
 
                     <div class="d-flex align-items-center">
                     <div class="ps-3">
-                        <h6>{{cats.Recette}}</h6>
+                        <h6></h6>
                     </div>
                     <div >
                       <i class="bi bi-currency-francs fs-3">F</i>
@@ -124,8 +124,6 @@
             </div><!-- End Sales Card -->
 
 
-
-           
 
 
           <div class="col-lg-12">
@@ -240,14 +238,17 @@
                     
                     </div>
                 </div>
-
+                
                 </div>
             </div><!-- End Sales Card -->
 
          </div><!-- End Customers Card -->
 
 
+          
+        
 
+            
          <div class="row">
 
          <!-- Left side columns -->
@@ -255,7 +256,7 @@
            <div class="row" style="margin-top:25px;">
  
              <!-- Sales Card -->
-             <div class="col-xxl-4 col-md-3 " >
+             <div class="col-xxl-4 col-md-4" >
                <div class="card info-card sales-card " >
  
                  <div class="filter">
@@ -290,7 +291,7 @@
              </div><!-- End Sales Card -->
  
              <!-- Revenue Card -->
-             <div class="col-xxl-4 col-md-3">
+             <div class="col-xxl-4 col-md-4">
                <div class="card info-card revenue-card">
  
                  <div class="filter">
@@ -329,7 +330,7 @@
  
  
              <!-- Sales Card -->
-             <div class="col-xxl-4 col-md-3">
+             <div class="col-xxl-4 col-md-4">
                  <div class="card info-card sales-card">
  
                  <div class="filter">
@@ -346,7 +347,7 @@
                  </div>
  
                  <div class="card-body">
-                     <h5 class="card-title">Trésorerie Boisson <span>| Today</span></h5>
+                     <h5 class="card-title">Trésorerie Boisson <span>| Aujourd'hui</span></h5>
  
                      <div class="d-flex align-items-center">
                      <div class="ps-3">
@@ -365,6 +366,112 @@
 
 
          
+             <div class="col-lg-12">
+             <div class="row">
+   
+               <!-- Sales Card -->
+               <div class="col-xxl-4 col-md-4">
+                 <div class="card info-card sales-card">
+   
+                   <div class="filter">
+                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                       <li class="dropdown-header text-start">
+                         <h6>Filter</h6>
+                       </li>
+   
+                       
+                       <li><a class="dropdown-item" href="{{path('recette_date')}}">A une date </a></li>
+                       <li><a class="dropdown-item" href="{{path('recette_mois')}}">Ce mois</a></li>
+                     </ul>
+                   </div>
+   
+                   <div class="card-body">
+                     <h5 class="card-title">Recette <span>| Aujourd'hui</span></h5>
+   
+                     <div class="d-flex align-items-center">
+                     <div class="ps-3">
+                    <h6>{{cats.Recette}}</h6>
+                </div>
+                <div >
+                  <i class="bi bi-currency-francs fs-3">F</i>
+                </div>
+                     </div>
+                   </div>
+   
+                 </div>
+               </div><!-- End Sales Card -->
+   
+               <!-- Revenue Card -->
+               <div class="col-xxl-4 col-md-4">
+                 <div class="card info-card revenue-card">
+   
+                   <div class="filter">
+                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                       <li class="dropdown-header text-start">
+                         <h6>Filter</h6>
+                       </li>
+   
+                      
+                       <li><a class="dropdown-item" href="{{path('recette_numeraire_date')}}">A une date </a></li>
+                       <li><a class="dropdown-item" href="{{path('recette_numeraire_mois')}}">Ce mois</a></li>
+                     </ul>
+                   </div>
+   
+                   <div class="card-body">
+                  <h5 class="card-title">Recette Numéraire<span>| Aujourd'hui</span></h5>
+
+                    <div class="d-flex align-items-center">
+                    <div class="ps-3">
+                        <h6>{{cats.RecetteNumeraire}}</h6>
+                    </div>
+                    <div >
+                      <i class="bi bi-currency-francs fs-3">F</i>
+                    </div>
+                    
+                    </div>
+                   </div>
+   
+                 </div>
+               </div><!-- End Revenue Card -->
+   
+               <!-- Customers Card -->
+               <div class="col-xxl-4 col-md-4">
+   
+                 <div class="card info-card customers-card">
+   
+                   <div class="filter">
+                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                       <li class="dropdown-header text-start">
+                         <h6>Filter</h6>
+                       </li>
+   
+                       
+                       <li><a class="dropdown-item" href="{{path('recette_electronique_date')}}">A une date</a></li>
+                       <li><a class="dropdown-item" href="{{path('recette_electronique_mois')}}">Ce mois</a></li>
+                     </ul>
+                   </div>
+   
+                   <div class="card-body">
+                     <h5 class="card-title">Recette Electronique <span>| Aujourd'hui</span></h5>
+                      <div class="d-flex align-items-center">
+                      <div class="ps-3">
+                          <h6>{{cats.RecetteElectronique}}</h6>
+                      </div>
+                      <div >
+                        <i class="bi bi-currency-francs fs-3">F</i>
+                      </div>
+                      </div>
+   
+                   </div>
+                 </div>
+   
+               </div><!-- End Customers Card -->
+   
+
+
 
 
 
@@ -401,6 +508,9 @@
                 <div class="card-body">
                 
               <h5 class="card-title">Evolution de la vente des repas</h5>
+
+              <div id="reportsChart">
+
 
               {{ render_chart(charts, {'class': 'my-chart'}) }}
 

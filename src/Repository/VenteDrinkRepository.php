@@ -56,8 +56,41 @@ class VenteDrinkRepository extends ServiceEntityRepository
         }       
 
 
+        public function getNbNumeraire()
+        {
+            $now = new \DateTime();
+            $qb = $this->createQueryBuilder('v')
+                ->select('SUM(v.montant)  AS total')
+                ->where('v.Statut IS NULL')
+                ->Where('v.mode_paiement =:mode_paiement')
+                ->andWhere('v.date =:date')
+                ->setParameter('date', $now->format('Y-m-d'))
+                ->setParameter('mode_paiement', 'Paiement Numéraire')
+                ->getQuery()
+                ->getSingleScalarResult();
+                
+                return $qb;
+        }       
+
+
+        public function getNbElectronique()
+        {
+            $now = new \DateTime();
+            $qb = $this->createQueryBuilder('v')
+                ->select('SUM(v.montant)  AS total')
+                ->where('v.Statut IS NULL')
+                ->Where('v.mode_paiement =:mode_paiement')
+                ->andWhere('v.date =:date')
+                ->setParameter('date', $now->format('Y-m-d'))
+                ->setParameter('mode_paiement', 'Paiement Electronique')
+                ->getQuery()
+                ->getSingleScalarResult();
+                
+                return $qb;
+        }  
         
 
+        
         
         public function getNbLait()
         {
@@ -107,6 +140,47 @@ class VenteDrinkRepository extends ServiceEntityRepository
         ;
     }
 
+
+
+    public function unedatenumeraire($date)
+    {
+       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+        return $this->createQueryBuilder('v')
+            ->select(' b.designation','v.prix_vente','SUM(v.quantite_boisson_vendue) AS quantite','SUM(v.montant) AS total')
+            ->innerJoin('v.boisson','b')
+            ->where('v.Statut IS NULL')
+            ->Where('v.mode_paiement =:mode_paiement')
+            ->andWhere('v.date =:date')
+            ->setParameter('date', $date->format('Y-m-d')) 
+            ->setParameter('mode_paiement', 'Paiement Numéraire') 
+            ->groupBy('b.designation')
+            ->having('SUM(v.montant) > 0 ')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    public function unedateelectronique($date)
+    {
+       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+        return $this->createQueryBuilder('v')
+            ->select(' b.designation','v.prix_vente','SUM(v.quantite_boisson_vendue) AS quantite','SUM(v.montant) AS total')
+            ->innerJoin('v.boisson','b')
+            ->where('v.Statut IS NULL')
+            ->Where('v.mode_paiement =:mode_paiement')
+            ->andWhere('v.date =:date')
+            ->setParameter('date', $date->format('Y-m-d'))
+            ->setParameter('mode_paiement', 'Paiement Electronique') 
+            ->groupBy('b.designation')
+            ->having('SUM(v.montant) > 0 ')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    
+    
     public function recherche($date1,$date2)
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
@@ -124,6 +198,46 @@ class VenteDrinkRepository extends ServiceEntityRepository
     }
     
 
+
+    public function recherchenumeraire($date1,$date2)
+    {
+       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+        return $this->createQueryBuilder('v')
+            ->select('SUM(v.montant) AS total','b.designation','b.Seuil','SUM(v.quantite_boisson_vendue) AS quantite','SUM(v.montant) AS tglobal')
+            ->innerJoin('v.boisson','b')
+            ->where('v.Statut IS NULL')
+            ->Where('v.mode_paiement =:mode_paiement')
+            ->andWhere('v.date BETWEEN :date1 AND :date2')
+            ->setParameter('date1', $date1->format('Y-m-d')) 
+            ->setParameter('date2', $date2->format('Y-m-d'))
+            ->setParameter('mode_paiement', 'Paiement Numéraire')  
+            ->groupBy('b.designation')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function rechercheelectronique($date1,$date2)
+    {
+       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
+        return $this->createQueryBuilder('v')
+            ->select('SUM(v.montant) AS total','b.designation','b.Seuil','SUM(v.quantite_boisson_vendue) AS quantite','SUM(v.montant) AS tglobal')
+            ->innerJoin('v.boisson','b')
+            ->where('v.Statut IS NULL')
+            ->Where('v.mode_paiement =:mode_paiement')
+            ->andWhere('v.date BETWEEN :date1 AND :date2')
+            ->setParameter('date1', $date1->format('Y-m-d')) 
+            ->setParameter('date2', $date2->format('Y-m-d'))
+            ->setParameter('mode_paiement', 'Paiement Electronique') 
+            ->groupBy('b.designation')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+
+    
 
     public function findBylaitunedate($date)
     {

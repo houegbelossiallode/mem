@@ -16,16 +16,15 @@
 {{ form_start(form) }}
 <div class="row">
 
-<div class="col-6">{{ form_row(form.date1) }}</div>
-<div class="col-6">{{ form_row(form.date2) }}</div>
+<div class="col-12">{{ form_row(form.date) }}</div>
+
 </div>
 
 {{ form_end(form) }}
 
 
 
-<div class="col-10">
-
+<div class="col-12">
 
 <form class="form-horizontal">
       <div class="table-responsive">
@@ -33,24 +32,19 @@
         
                           <thead>
                               <tr>
-                                  
                                   <th>Total</th>
                               </tr>
                           </thead>
-                          
                           <tbody>
                               {% if donnees |length == 0 %}
-                          <h4>Aucun resultats pour la recherche</h4>
+                              <h4>Aucun resultats pour la recherche</h4>
                               {% else %}
                               <h4 class="text text-primary">Résultats de la recherche</h4>
-                              
                                   <tr>
-                                      <td>{{donnees.montant}}</td>
+                                      <td class="fs-1">{{donnees.montant}}</td>
                                   </tr>
-                                  
                               {% endif %}
                           </tbody>
-                      
                       </table>
               </div>
           </form>

@@ -478,6 +478,135 @@ class RechercheController extends AbstractController
 
 
 
+    #[Route('/recherche/recette_electronique_date', name: 'recette_electronique_date')]
+    public function recette_electronique_date(Request $request,VenteDrinkRepository $venteDrinkRepository,VenteRepasRepository $venteRepasRepository ): Response
+    {
+       $donnees = array('montant'=>0);
+       $form = $this->createForm(PeriodeType::class);
+       $form->handleRequest($request);
+       
+       if($form->isSubmitted() && $form->isValid())
+       {
+        $date = $form->get('date')->getData(); 
+        $donnees_vente_boisson = $venteDrinkRepository->unedateelectronique($date);
+        $donnees_vente_repas =  $venteRepasRepository->unedateelectronique($date);
+        $total_vente_boisson = 0;
+            foreach($donnees_vente_boisson as $vente_boisson){
+                $total_vente_boisson +=$vente_boisson['total']; 
+            }
+            $total_vente_repas = 0;
+        
+            foreach($donnees_vente_repas as $vente_repas){
+                $total_vente_repas +=$vente_repas['total']; 
+            }
+        $donnees['montant'] = $total_vente_boisson +  $total_vente_repas; 
+
+       }
+        return $this->render('recherche/date_recette_electronique.html.twig', [
+         'form'=> $form->createView(),
+         'donnees'=> $donnees,
+        ]);
+    }
+
+
+
+    #[Route('/recherche/recette_electronique_mois', name: 'recette_electronique_mois')]
+    public function recette_electronique_mois(Request $request,VenteDrinkRepository $venteDrinkRepository,VenteRepasRepository $venteRepasRepository ): Response
+    {
+       $donnees = array('montant'=>0);
+       $form = $this->createForm(RecherchemoisType::class);
+       $form->handleRequest($request);
+       
+       if($form->isSubmitted() && $form->isValid())
+       {
+        $date1 = $form->get('date1')->getData(); 
+        $date2 = $form->get('date2')->getData();
+        $donnees_vente_boisson = $venteDrinkRepository->rechercheelectronique($date1,$date2);
+        $donnees_vente_repas =   $venteRepasRepository->rechercheelectronique($date1,$date2);
+        $total_vente_boisson = 0;
+            foreach($donnees_vente_boisson as $vente_boisson){
+                $total_vente_boisson +=$vente_boisson['total']; 
+            }
+            $total_vente_repas = 0;
+        
+            foreach($donnees_vente_repas as $vente_repas){
+                $total_vente_repas +=$vente_repas['total']; 
+            }
+        $donnees['montant'] = $total_vente_boisson +  $total_vente_repas; 
+
+       }
+        return $this->render('recherche/mois_recette_electronique.html.twig', [
+         'form'=> $form->createView(),
+         'donnees'=> $donnees,
+        ]);
+    }
+
+
+
+    #[Route('/recherche/recette_numeraire_date', name: 'recette_numeraire_date')]
+    public function recette_numeraire_date(Request $request,VenteDrinkRepository $venteDrinkRepository,VenteRepasRepository $venteRepasRepository ): Response
+    {
+       $donnees = array('montant'=>0);
+       $form = $this->createForm(PeriodeType::class);
+       $form->handleRequest($request);
+       
+       if($form->isSubmitted() && $form->isValid())
+       {
+        $date = $form->get('date')->getData(); 
+        $donnees_vente_boisson = $venteDrinkRepository->unedatenumeraire($date);
+        $donnees_vente_repas =   $venteRepasRepository->unedatenumeraire($date);
+        $total_vente_boisson = 0;
+            foreach($donnees_vente_boisson as $vente_boisson){
+                $total_vente_boisson +=$vente_boisson['total']; 
+            }
+            $total_vente_repas = 0;
+        
+            foreach($donnees_vente_repas as $vente_repas){
+                $total_vente_repas +=$vente_repas['total']; 
+            }
+        $donnees['montant'] = $total_vente_boisson +  $total_vente_repas; 
+
+       }
+        return $this->render('recherche/date_recette_numeraire.html.twig', [
+         'form'=> $form->createView(),
+         'donnees'=> $donnees,
+        ]);
+    }
+
+    
+
+ 
+    
+    #[Route('/recherche/recette_numeraire_mois', name: 'recette_numeraire_mois')]
+    public function recette_numeraire_mois(Request $request,VenteDrinkRepository $venteDrinkRepository,VenteRepasRepository $venteRepasRepository ): Response
+    {
+       $donnees = array('montant'=>0);
+       $form = $this->createForm(RecherchemoisType::class);
+       $form->handleRequest($request);
+       
+       if($form->isSubmitted() && $form->isValid())
+       {
+        $date1 = $form->get('date1')->getData(); 
+        $date2 = $form->get('date2')->getData();
+        $donnees_vente_boisson = $venteDrinkRepository->recherchenumeraire($date1,$date2);
+        $donnees_vente_repas =   $venteRepasRepository->recherchenumeraire($date1,$date2);
+        $total_vente_boisson = 0;
+            foreach($donnees_vente_boisson as $vente_boisson){
+                $total_vente_boisson +=$vente_boisson['total']; 
+            }
+            $total_vente_repas = 0;
+        
+            foreach($donnees_vente_repas as $vente_repas){
+                $total_vente_repas +=$vente_repas['total']; 
+            }
+        $donnees['montant'] = $total_vente_boisson +  $total_vente_repas; 
+
+       }
+        return $this->render('recherche/mois_recette_numeraire.html.twig', [
+         'form'=> $form->createView(),
+         'donnees'=> $donnees,
+        ]);
+    }
 
     
 

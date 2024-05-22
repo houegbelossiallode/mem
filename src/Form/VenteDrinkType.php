@@ -7,6 +7,7 @@ use App\Entity\VenteDrink;
 use App\Repository\BoissonRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -38,6 +39,14 @@ class VenteDrinkType extends AbstractType
             ->add('date',DateType::class,[
                 'widget' => 'single_text',
                 'label'=> 'Date' 
+            ])
+            ->add('mode_paiement',ChoiceType::class,[
+                'label'=> 'Mode de paiement',
+                'placeholder'=> 'Choisissez un mode de paiement',
+                'choices'=>[
+                    'Paiement Numéraire'=> 'Paiement Numéraire',
+                    'Paiement Electronique'=> 'Paiement Electronique',
+                ],
             ])
             ->add('valider',SubmitType::class)
         ;

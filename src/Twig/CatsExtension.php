@@ -102,22 +102,7 @@ class CatsExtension extends AbstractExtension
             
         }
     
-        public function getRecette() : array
-        {
-            return[
-              new TwigFunction('cats',[$this,'Recette'])  
-            ];
-        }
-        
-        
-        public function Recette()
-      {
-         $totalventeboisson = $this->em->getRepository(VenteDrink::class)->getNb();
-         $totalventerepas = $this->em->getRepository(VenteRepas::class)->getNb();
-        
-         return $totalventeboisson  + $totalventerepas;
-                
-     }
+       
 
 
      public function getDepenseVivres() : array
@@ -222,6 +207,56 @@ public function TresorerieBoisson()
   $totaldepenseboisson = $this->em->getRepository(DepenseAppro::class)->countByTresorerie();
   $soldeboisson =  $totalventeboisson  - $totaldepenseboisson;
   return $tresorerie +=  $soldeboisson;
+}
+
+
+public function getRecette() : array
+{
+    return[
+      new TwigFunction('cats',[$this,'Recette'])  
+    ];
+}
+
+
+public function Recette()
+{
+ $totalventeboisson = $this->em->getRepository(VenteDrink::class)->getNb();
+ $totalventerepas = $this->em->getRepository(VenteRepas::class)->getNb();
+
+ return $totalventeboisson  + $totalventerepas;
+        
+}
+
+
+
+public function getRecetteNumeraire() : array
+{
+    return[
+      new TwigFunction('cats',[$this,'RecetteNumeraire'])  
+    ];
+}
+
+public function RecetteNumeraire()
+{
+ $totalventeboisson = $this->em->getRepository(VenteDrink::class)->getNbNumeraire();
+ $totalventerepas = $this->em->getRepository(VenteRepas::class)->getNbNumeraire();
+ return $totalventeboisson  + $totalventerepas;       
+}
+
+
+
+public function getRecetteElectronique() : array
+{
+    return[
+      new TwigFunction('cats',[$this,'RecetteElectronique'])  
+    ];
+}
+
+public function RecetteElectronique()
+{
+ $totalventeboisson = $this->em->getRepository(VenteDrink::class)->getNbElectronique();
+ $totalventerepas = $this->em->getRepository(VenteRepas::class)->getNbElectronique();
+ return $totalventeboisson  + $totalventerepas;
 }
 
 

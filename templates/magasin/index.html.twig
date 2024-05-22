@@ -1,13 +1,11 @@
 {% extends 'template.html.twig' %}
 
 {% block title %}Magasin index{% endblock %}
-
+{% block pagetitle %}Les boissons aux magasins{% endblock %}
 {% block body %}
   
                         {% if app.request.method == 'GET' %}
-                            {% if magasin |length > 0 %}
-                            <h3 class="alert alert-danger">Listes des boissons à réapprovisionner</h3>
-                            {% endif %}
+                            
                             <marquee  direction="right">
                             <h4 class="alert alert-danger">
                             {% for donnee in magasin %}

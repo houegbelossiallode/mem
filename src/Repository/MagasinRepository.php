@@ -27,12 +27,9 @@ class MagasinRepository extends ServiceEntityRepository
    public function findByBoisson()
     {
         return $this->createQueryBuilder('m')
-            ->select('b.designation','m.quantite_stock')
-            ->leftJoin('m.boisson','b')
+            ->select('b.designation','m.quantite_stock','b.Seuil')
+            ->innerJoin('m.boisson','b')
             ->Where('m.quantite_stock <= b.Seuil')
-        //    ->orWhere('m.quantite_stock < b.Seuil')
-        //    ->setParameter('b.Seuil', 'b.Seuil')
-        //    ->setParameter('Seuil', 'b.Seuil')
             ->getQuery()
             ->getResult()
         ;

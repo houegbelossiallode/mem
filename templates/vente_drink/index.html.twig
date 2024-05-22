@@ -15,7 +15,9 @@
 <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 {% endfor %}
 
-
+{% for flash_error in app.flashes('success') %}
+<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+{% endfor %}
 
 <div class="container-fluid" >
 <div class="card shadow mb-4">
@@ -34,6 +36,7 @@
                 <th>Prix de vente</th>
                 <th>Quantité vendue</th>
                 <th>Montant</th>
+                <th>Mode Paiement</th>
                 {% if is_granted('ROLE_ADMIN')%}
                 <th>Auteur</th>
                 {% endif %}
@@ -53,6 +56,7 @@
                 <td>{{ vente_drink.prixVente }}</td>
                 <td>{{ vente_drink.quantiteBoissonVendue }}</td>
                 <td>{{ vente_drink.montant}}</td>
+                <td>{{ vente_drink.modepaiement}}</td>
                 {% if is_granted('ROLE_ADMIN')%}
                 <td>{{ vente_drink.user.nom }}</td>
                 {% endif %}

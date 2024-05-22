@@ -31,6 +31,7 @@
                 <th>Quantité vendue</th>
                 <th>Prix</th>
                 <th>montant</th>
+                <th>Mode de paiement</th>
                 {% if is_granted('ROLE_ADMIN')%}
                 <th>Auteur</th>
                 {% endif %}
@@ -60,6 +61,7 @@
                 <td>{{ vente_repa.qteVendue }}</td>
                 <td>{{ vente_repa.prixVente }}</td>
                 <td>{{ vente_repa.montant }}</td>
+                <td>{{ vente_repa.modepaiement}}</td>
                 {% if is_granted('ROLE_ADMIN')%}
                 <td>{{ vente_repa.user.nom }}</td>
                 {% endif %}

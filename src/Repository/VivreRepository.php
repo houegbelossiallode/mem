@@ -44,7 +44,7 @@ class VivreRepository extends ServiceEntityRepository
             ->select('p.nom','v.qte_stock')
             ->Join('v.proteine','p')
             ->Where('v.qte_stock <= :Seuil')
-            ->setParameter('Seuil', 3)
+            ->setParameter('Seuil', 1)
             ->getQuery()
             ->getResult()
         ;

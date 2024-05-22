@@ -27,9 +27,9 @@ class MagasinController extends AbstractController
     public function index(MagasinRepository $magasinRepository,MailerInterface $mailer,BoissonRepository $boissonRepository): Response
     {
         $user = new User();
-        $boisson = $boissonRepository->findByBoisson();
+        $magasin = $magasinRepository->findByBoisson();
         $user = $this->getUser();
-        
+       // dd($boisson);
        // Envoi du message d'alerte par mail    
        $to = $user->getEmail();
        $subject = 'Listes des boissons à réapprovisionner ';
@@ -39,7 +39,7 @@ class MagasinController extends AbstractController
        ->subject($subject)
        ->htmlTemplate('magasin/email.html.twig')
        ->context([
-        'magasin'=> $boisson
+        'magasin'=> $magasin
        ]);
 
        $mailer->send($email);
@@ -47,7 +47,7 @@ class MagasinController extends AbstractController
        
         return $this->render('magasin/index.html.twig', [
             'magasins' => $magasinRepository->findAll(),
-            'magasin'=>$boisson
+            'magasin'=>$magasin
         ]);
     }
 
