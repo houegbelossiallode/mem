@@ -1,23 +1,22 @@
 {% extends 'template.html.twig' %}
 
 {% block title %}Congelateur index{% endblock %}
-{% block pagetitle %}Liste des boissons aux   Congelateurs {% endblock %}
+
 {% block body %}
    
 
 
+{% if conge |length > 0 %}
 
- 
   <marquee  direction="right">
   <h4 class="alert alert-danger">
-
   {% for donnee in conge %}
   {{ donnee.designation}}
   {% endfor %}
-
 </h4>
 </marquee>
 
+{% endif %}
 
 
 

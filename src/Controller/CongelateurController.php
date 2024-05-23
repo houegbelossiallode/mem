@@ -29,7 +29,10 @@ class CongelateurController extends AbstractController
       // foreach ($conge as $conges)
       //  {  
       //  $mavariable = $conges["designation"];
-      //  }    
+      //  }  
+      
+      if($conge){
+
         $to = $user->getEmail();
         $subject = 'Listes des boissons à réapprovisionner ';
         $email = (new TemplatedEmail())
@@ -42,6 +45,9 @@ class CongelateurController extends AbstractController
         ]);
         
         $mailer->send($email);
+
+      }
+        
          
        
         $congelateurs = $congelateurRepository->findAll();

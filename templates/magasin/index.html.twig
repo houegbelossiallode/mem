@@ -1,18 +1,19 @@
 {% extends 'template.html.twig' %}
 
 {% block title %}Magasin index{% endblock %}
-{% block pagetitle %}Les boissons aux magasins{% endblock %}
+{% block pagetitle %}Liste des boissons aux magasins{% endblock %}
 {% block body %}
   
                         {% if app.request.method == 'GET' %}
-                            
+                            {% if magasin |length > 0 %}
                             <marquee  direction="right">
                             <h4 class="alert alert-danger">
                             {% for donnee in magasin %}
                             {{ donnee.designation}}
                             {% endfor %}
                             </h4>
-                            </marquee>  
+                            </marquee> 
+                        {% endif %} 
                         {% endif %}
 
 {% for flash_error in app.flashes('error') %}

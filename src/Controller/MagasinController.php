@@ -31,6 +31,8 @@ class MagasinController extends AbstractController
         $user = $this->getUser();
        // dd($boisson);
        // Envoi du message d'alerte par mail    
+       if($magasin){
+
        $to = $user->getEmail();
        $subject = 'Listes des boissons à réapprovisionner ';
        $email = (new TemplatedEmail())
@@ -41,8 +43,12 @@ class MagasinController extends AbstractController
        ->context([
         'magasin'=> $magasin
        ]);
-
        $mailer->send($email);
+        
+       }
+
+       
+       
 
        
         return $this->render('magasin/index.html.twig', [
