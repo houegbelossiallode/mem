@@ -8,4 +8,136 @@
     {{ include('vente_repas/_form.html.twig') }}
 
     <a href="{{ path('app_vente_repas_index') }}">back to list</a>
+
+   
+
 {% endblock %}
+
+
+{% block javascripts %} 
+{{ parent() }}
+    <script>
+        $(function () {        
+            //$('.select2').select2();
+
+            //alert('bonjour');
+
+            $('.proteine_select').bind('change', function(){
+                var id_proteine = $(this).val();
+
+
+                
+                $.ajax({
+                    url: '{{ path('select_calibre_async') }}',
+                    type: "POST",
+                    dataType: "json",
+                        data: {
+                            "id_proteine": id_proteine                 
+                                                  
+                        },
+                        async: true,
+                        error: function (error) {
+                            //console.log(error)
+                            var error_message = '';
+                            if(error.status == 404){
+                                error_message = error.responseJSON;
+                            }
+                            else{
+                                error_message = "Ooouups ! Une erreur est survenue !";
+                            }
+
+                          
+                        },
+
+                       
+                        success: function (html_data, status) {
+                            //console.log(status)
+                            
+                            // refresh the domaine select options
+                         //   $('.calibre_select').prop('disabled', false);
+                            $('.calibre_select').html(html_data);
+
+                            // close the modal
+                           
+                        }
+                })
+            });
+
+
+
+            
+            $('.repas_select').bind('change', function(){
+                var id_repas = $(this).val();
+
+
+                
+                $.ajax({
+                    url: '{{ path('select_calibre_repas_async') }}',
+                    type: "POST",
+                    dataType: "json",
+                        data: {
+                            "id_repas": id_repas                 
+                                                  
+                        },
+                        async: true,
+                        error: function (error) {
+                            //console.log(error)
+                            var error_message = '';
+                            if(error.status == 404){
+                                error_message = error.responseJSON;
+                            }
+                            else{
+                                error_message = "Ooouups ! Une erreur est survenue !";
+                            }
+
+                          
+                        },
+                        success: function (html_data, status) {
+                            //console.log(status)
+                            
+                            // refresh the domaine select options
+                            $('.accompagnement_select').html(html_data);
+
+                            // close the modal
+                           
+                        }
+                })
+            });
+
+
+       
+
+
+
+
+
+
+
+
+        });
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    </script>
+{% endblock %}
+
+
+                      

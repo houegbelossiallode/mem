@@ -17,8 +17,6 @@ class Vivre
     #[ORM\Column]
     private ?int $id = null;
 
-   
-
     #[ORM\Column(length: 50,nullable:true)]
     private ?string $qte_stock = null;
 
@@ -27,6 +25,7 @@ class Vivre
 
     #[ORM\ManyToOne(inversedBy: 'vivres')]
     private ?Proteine $proteine = null;
+
 
     public function __construct()
     {
@@ -95,4 +94,6 @@ class Vivre
 
         return $this;
     }
+
+   
 }

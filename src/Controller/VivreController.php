@@ -27,18 +27,18 @@ class VivreController extends AbstractController
         $user = $this->getUser();
         
        // Envoi du message d'alerte par mail    
-       $to = $user->getEmail();
-       $subject = 'Listes des vivres à réapprovisionner ';
-       $email = (new TemplatedEmail())
-       ->from(new Address('houegbelossiallode@gmail.com', 'Administratrice'))
-       ->to($to)
-       ->subject($subject)
-       ->htmlTemplate('vivre/email.html.twig')
-       ->context([
-        'vivre'=> $vivre
-       ]);
+      // $to = $user->getEmail();
+      // $subject = 'Listes des vivres à réapprovisionner ';
+     //  $email = (new TemplatedEmail())
+     //  ->from(new Address('houegbelossiallode@gmail.com', 'Administratrice'))
+     //  ->to($to)
+     //  ->subject($subject)
+     //  ->htmlTemplate('vivre/email.html.twig')
+     //  ->context([
+     //   'vivre'=> $vivre
+     //  ]);
 
-       $mailer->send($email);
+     //  $mailer->send($email);
 
         
         return $this->render('vivre/index.html.twig', [

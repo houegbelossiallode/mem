@@ -16,7 +16,7 @@ class ProteineType extends AbstractType
         $builder
             ->add('nom',TextType::class,[
                 'attr' => array('class'=> 'text-uppercase'),
-                'invalid_message' => 'Saisissez des lettres uniquement',
+                
             ])
             ->add('VALIDER',SubmitType::class)
         ;

@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 class DepenseApproType extends AbstractType
 {
@@ -26,7 +27,11 @@ class DepenseApproType extends AbstractType
             ])
             ->add('date',DateType::class,[
                 'widget' => 'single_text',
-                'label'=> 'Date' 
+                'label'=> 'Date',
+                'constraints' => [
+                    new LessThanOrEqual('today'),
+                    
+                ],
             ])
             ->add('nombre_trou',NumberType::class,[
                 'invalid_message' => 'Saisissez des chiffers uniquement',

@@ -1,0 +1,8 @@
+{% extends 'template.html.twig' %}
+{% block title %}Nouveau calibre{% endblock %}
+{% block pagetitle %}Créer un nouveau calibre{% endblock %}
+{% block body %}
+
+    {{ include('calibre/_form.html.twig') }}
+    <a href="{{ path('app_calibre_index') }}">back to list</a>
+{% endblock %}

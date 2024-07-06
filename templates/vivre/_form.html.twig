@@ -7,6 +7,20 @@
               <h5 class="card-title"></h5>
 
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    
+    {{ form_row(form.proteine) }}
+    {{ form_row(form.text) }}
 {{ form_end(form) }}
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      document.querySelector('.article-select').addEventListener('change', function() {
+          const inputForArticle = document.querySelector('.article-input');
+          if (this.value !== '') {
+              inputForArticle.style.display = 'block';
+          } else {
+              inputForArticle.style.display = 'none';
+          }
+      });
+  });
+  </script>

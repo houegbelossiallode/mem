@@ -17,24 +17,24 @@ class Proteine
     private ?int $id = null;
 
     
-    #[Assert\Regex(
-        pattern: '/\d/',
-        match: false,
-        message: 'Ce champ ne doit pas contenir des chiffres'
-    )]
+   
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(targetEntity: VenteRepas::class, mappedBy: 'proteine')]
+    #[ORM\OneToMany(targetEntity: VenteRepas::class, mappedBy: 'proteine',orphanRemoval: true, cascade: ['persist'])]
     private Collection $venteRepas;
 
-    #[ORM\OneToMany(targetEntity: Vivre::class, mappedBy: 'proteine')]
+    #[ORM\OneToMany(targetEntity: Vivre::class, mappedBy: 'proteine',orphanRemoval: true, cascade: ['persist'])]
     private Collection $vivres;
+
+    #[ORM\OneToMany(targetEntity: Calibre::class, mappedBy: 'proteine')]
+    private Collection $calibres;
 
     public function __construct()
     {
         $this->venteRepas = new ArrayCollection();
         $this->vivres = new ArrayCollection();
+        $this->calibres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,6 +113,36 @@ class Proteine
             // set the owning side to null (unless already changed)
             if ($vivre->getProteine() === $this) {
                 $vivre->setProteine(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Calibre>
+     */
+    public function getCalibres(): Collection
+    {
+        return $this->calibres;
+    }
+
+    public function addCalibre(Calibre $calibre): static
+    {
+        if (!$this->calibres->contains($calibre)) {
+            $this->calibres->add($calibre);
+            $calibre->setProteine($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCalibre(Calibre $calibre): static
+    {
+        if ($this->calibres->removeElement($calibre)) {
+            // set the owning side to null (unless already changed)
+            if ($calibre->getProteine() === $this) {
+                $calibre->setProteine(null);
             }
         }
 

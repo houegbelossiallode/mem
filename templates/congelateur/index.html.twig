@@ -1,14 +1,16 @@
 {% extends 'template.html.twig' %}
 
 {% block title %}Congelateur index{% endblock %}
-
+{% block pagetitle %}Liste des boissons aux congelateurs{% endblock %}
 {% block body %}
    
 
 
 {% if conge |length > 0 %}
 
+<h4 class="text text-danger">Veuillez réapprovisionner ces boissons vous êtes en rupture de stock</h4>
   <marquee  direction="right">
+  
   <h4 class="alert alert-danger">
   {% for donnee in conge %}
   {{ donnee.designation}}

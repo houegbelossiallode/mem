@@ -1,0 +1,11 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}New CalibreRepas{% endblock %}
+{% block pagetitle %}Ajouter un nouveau prix{% endblock %}
+{% block body %}
+    
+
+    {{ include('calibre_repas/_form.html.twig') }}
+
+    <a href="{{ path('app_calibre_repas_index') }}">back to list</a>
+{% endblock %}

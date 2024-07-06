@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CalibreRepas{% endblock %}
+
+{% block body %}
+    <h1>Edit CalibreRepas</h1>
+
+    {{ include('calibre_repas/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_calibre_repas_index') }}">back to list</a>
+
+    {{ include('calibre_repas/_delete_form.html.twig') }}
+{% endblock %}

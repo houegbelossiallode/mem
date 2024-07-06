@@ -1,0 +1,67 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Panier{% endblock %}
+
+
+{% block body %}
+
+    <main class="container">
+        <section class="row">
+            <div class="col-sm-6">
+                <h1>Panier</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Plat</th>
+                            
+                            <th>Quantité</th>
+                            
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for element in data %}
+                        
+                            <tr>
+                                <td>{{ element.repas.accompagnement }}</td>
+                                    
+                                
+                                    
+                                
+                                <td>{{ element.qte_vendue }} €</td>
+                                <td>
+                                <a href="{{ path('cart_add', {id: element.repas.id}) }}" class="btn btn-success"><i class="fa fa-plus"></i></a>
+                                <a href="" class="btn btn-warning"><i class="fa-solid fa-window-minimize"></i></a>
+                                <a href="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                               </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5">Votre panier est vide</td>
+                            </tr>
+                            
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Total :</td>
+                            <td></td>
+                            <td>
+                            <a href="{{ path('empty') }}" class="btn btn-danger">Vider</a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <a href="" class="btn btn-primary">Valider mon Panier</a>
+            <a href="{{ path('app_vente_repas_new') }}" class="btn btn-success">Continuer la commande</a>
+            </div>
+
+
+        </section>
+    </main>
+
+
+
+  
+
+{% endblock %}

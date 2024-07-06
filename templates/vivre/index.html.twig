@@ -45,17 +45,18 @@
                     <td>
                         <form action="{{ path('add_quantite_vivre', {id : vivre.id})}}" method="POST">
                          <div>
-                           <input type="text" name="ajout" id="ajout" class="form-control" placeholder="Ajout quantité">  
+                           <input type="text" name="ajout" id="ajout" class="form-control" placeholder="Ajout quantité" pattern="[0-9]+" title="Saisissez uniquement des chiffres ">  
                                </div>
                            <button type="submit" class="btn btn-sm btn-outline-primary">Ajouter</button>
                        </form>
                        </td>
     
-                       
+             {% if is_granted('ROLE_ADMIN')%}
                 <td>
                     <a href="{{ path('app_vivre_show', {'id': vivre.id}) }}">show</a>
                     <a href="{{ path('app_vivre_edit', {'id': vivre.id}) }}">edit</a>
                 </td>
+            {% endif %}
             </tr>
         {% else %}
             <tr>

@@ -27,9 +27,11 @@
             <tr>
                 
                 <th>Accompagnement</th>
+                <th>Quantité Accompagnement</th>
+                <th>Prix Accompagnement</th>
                 <th>Protéine</th>
-                <th>Quantité vendue</th>
-                <th>Prix</th>
+                <th>Quantité Proteine</th>
+                <th>Prix Proteine</th>
                 <th>montant</th>
                 <th>Mode de paiement</th>
                 {% if is_granted('ROLE_ADMIN')%}
@@ -53,13 +55,17 @@
                     {{vente_repa.repas.accompagnement }}
                     {% endif %}
                 </td>
+            <td>{{ vente_repa.qte }}</td>
+            <td>{{ vente_repa.prixVenteAccompagnement}}</td>
+
                 <td>
                     {% if vente_repa.proteine.nom is defined %}
                     {{vente_repa.proteine.nom }}
                     {% endif %}
                 </td>
                 <td>{{ vente_repa.qteVendue }}</td>
-                <td>{{ vente_repa.prixVente }}</td>
+                <td>{{ vente_repa.prixVenteProteine}}</td>
+                
                 <td>{{ vente_repa.montant }}</td>
                 <td>{{ vente_repa.modepaiement}}</td>
                 {% if is_granted('ROLE_ADMIN')%}
@@ -85,7 +91,7 @@
             </tr>
           {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="12">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

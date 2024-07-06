@@ -31,22 +31,22 @@ class CongelateurController extends AbstractController
       //  $mavariable = $conges["designation"];
       //  }  
       
-      if($conge){
+     // if($conge){
 
-        $to = $user->getEmail();
-        $subject = 'Listes des boissons à réapprovisionner ';
-        $email = (new TemplatedEmail())
-       ->from(new Address('houegbelossiallode@gmail.com', 'Administratrice'))
-       ->to($to)
-       ->subject($subject)
-       ->htmlTemplate('congelateur/email.html.twig')
-       ->context([
-        'conge'=> $conge
-        ]);
+     //   $to = $user->getEmail();
+     //   $subject = 'Listes des boissons à réapprovisionner ';
+     //   $email = (new TemplatedEmail())
+    //   ->from(new Address('houegbelossiallode@gmail.com', 'LES DÉLICES DU COIN'))
+    //   ->to($to)
+    //   ->subject($subject)
+    //   ->htmlTemplate('congelateur/email.html.twig')
+    //   ->context([
+    //    'conge'=> $conge
+    //    ]);
         
-        $mailer->send($email);
+    //    $mailer->send($email);
 
-      }
+    //  }
         
          
        

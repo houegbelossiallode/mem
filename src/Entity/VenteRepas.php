@@ -19,7 +19,7 @@ class VenteRepas
    
 
     #[ORM\Column(length: 50)]
-    private ?string $prix_vente = null;
+    private ?string $prix_vente_proteine = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE,options:['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeInterface $date = null;
@@ -48,6 +48,14 @@ class VenteRepas
     #[ORM\Column(length: 50)]
     private ?string $mode_paiement = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $prix_vente_accompagnement = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $qte = null;
+
+    
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -59,14 +67,14 @@ class VenteRepas
         return $this->id;
     }
 
-    public function getPrixVente(): ?string
+    public function getPrixVenteProteine(): ?string
     {
-        return $this->prix_vente;
+        return $this->prix_vente_proteine;
     }
 
-    public function setPrixVente(string $prix_vente): static
+    public function setPrixVenteProteine(string $prix_vente_proteine): static
     {
-        $this->prix_vente = $prix_vente;
+        $this->prix_vente_proteine = $prix_vente_proteine;
 
         return $this;
     }
@@ -201,6 +209,31 @@ class VenteRepas
         return $this;
     }
 
+    public function getPrixVenteAccompagnement(): ?string
+    {
+        return $this->prix_vente_accompagnement;
+    }
+
+    public function setPrixVenteAccompagnement(?string $prix_vente_accompagnement): static
+    {
+        $this->prix_vente_accompagnement = $prix_vente_accompagnement;
+
+        return $this;
+    }
+
+    public function getQte(): ?string
+    {
+        return $this->qte;
+    }
+
+    public function setQte(?string $qte): static
+    {
+        $this->qte = $qte;
+
+        return $this;
+    }
+
+   
 
     
 

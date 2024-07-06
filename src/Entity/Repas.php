@@ -28,9 +28,13 @@ class Repas
     #[ORM\OneToMany(targetEntity: VenteRepas::class, mappedBy: 'repas')]
     private Collection $venteRepas;
 
+    #[ORM\OneToMany(targetEntity: CalibreRepas::class, mappedBy: 'repas')]
+    private Collection $calibreRepas;
+
     public function __construct()
     {
         $this->venteRepas = new ArrayCollection();
+        $this->calibreRepas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,10 +87,40 @@ class Repas
     }
 
 
- public function __toString()
- {
-    return $this->accompagnement;
- }
+                public function __toString()
+                {
+                   return $this->accompagnement;
+                }
+
+    /**
+     * @return Collection<int, CalibreRepas>
+     */
+    public function getCalibreRepas(): Collection
+    {
+        return $this->calibreRepas;
+    }
+
+    public function addCalibreRepa(CalibreRepas $calibreRepa): static
+    {
+        if (!$this->calibreRepas->contains($calibreRepa)) {
+            $this->calibreRepas->add($calibreRepa);
+            $calibreRepa->setRepas($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCalibreRepa(CalibreRepas $calibreRepa): static
+    {
+        if ($this->calibreRepas->removeElement($calibreRepa)) {
+            // set the owning side to null (unless already changed)
+            if ($calibreRepa->getRepas() === $this) {
+                $calibreRepa->setRepas(null);
+            }
+        }
+
+        return $this;
+    }
 
 
 

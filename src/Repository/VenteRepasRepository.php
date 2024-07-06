@@ -88,7 +88,7 @@ class VenteRepasRepository extends ServiceEntityRepository
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
         return $this->createQueryBuilder('v')
-            ->select('r.accompagnement','p.nom','v.prix_vente','SUM(v.montant) AS total')
+            ->select('r.accompagnement','p.nom','v.prix_vente_proteine','v.prix_vente_accompagnement','SUM(v.montant) AS total')
             ->leftJoin('v.repas','r')
             ->leftJoin('v.proteine','p')
             ->where('v.statut IS NULL')
@@ -104,7 +104,7 @@ class VenteRepasRepository extends ServiceEntityRepository
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
         return $this->createQueryBuilder('v')
-            ->select('r.accompagnement','p.nom','v.prix_vente','SUM(v.montant) AS total')
+            ->select('r.accompagnement','p.nom','v.prix_vente_proteine','v.prix_vente_accompagnement','SUM(v.montant) AS total')
             ->leftJoin('v.repas','r')
             ->leftJoin('v.proteine','p')
             ->where('v.statut IS NULL')
@@ -122,7 +122,7 @@ class VenteRepasRepository extends ServiceEntityRepository
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
         return $this->createQueryBuilder('v')
-            ->select('r.accompagnement','p.nom','v.prix_vente','SUM(v.montant) AS total')
+            ->select('r.accompagnement','p.nom','v.prix_vente_proteine','v.prix_vente_accompagnement','SUM(v.montant) AS total')
             ->leftJoin('v.repas','r')
             ->leftJoin('v.proteine','p')
             ->where('v.statut IS NULL')
@@ -142,7 +142,7 @@ class VenteRepasRepository extends ServiceEntityRepository
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
         return $this->createQueryBuilder('v')
-            ->select('r.accompagnement','p.nom','v.prix_vente','SUM(v.montant) AS total')
+            ->select('r.accompagnement','p.nom','v.prix_vente_proteine','v.prix_vente_accompagnement','SUM(v.montant) AS total')
             ->leftJoin('v.repas','r')
             ->leftJoin('v.proteine','p')
             ->where('v.statut IS NULL')
@@ -161,7 +161,7 @@ class VenteRepasRepository extends ServiceEntityRepository
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
         return $this->createQueryBuilder('v')
-            ->select('r.accompagnement','p.nom','v.prix_vente','SUM(v.montant) AS total')
+            ->select('r.accompagnement','p.nom','v.prix_vente_proteine','v.prix_vente_accompagnement','SUM(v.montant) AS total')
             ->leftJoin('v.repas','r')
             ->leftJoin('v.proteine','p')
             ->where('v.statut IS NULL')
@@ -181,7 +181,7 @@ class VenteRepasRepository extends ServiceEntityRepository
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
         return $this->createQueryBuilder('v')
-            ->select('r.accompagnement','p.nom','v.prix_vente','SUM(v.montant) AS total')
+            ->select('r.accompagnement','p.nom','v.prix_vente_proteine','v.prix_vente_accompagnement','SUM(v.montant) AS total')
             ->leftJoin('v.repas','r')
             ->leftJoin('v.proteine','p')
             ->where('v.statut IS NULL')
@@ -202,7 +202,7 @@ class VenteRepasRepository extends ServiceEntityRepository
     {
        // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
         return $this->createQueryBuilder('v')
-            ->select('r.accompagnement','(p.nom) AS name','v.prix_vente','v.qte_vendue','u.nom','v.date','v.montant')
+            ->select('r.accompagnement','(p.nom) AS name','v.prix_vente_proteine','v.qte_vendue','u.nom','v.date','v.montant')
             ->leftJoin('v.repas','r')
             ->leftJoin('v.proteine','p')
             ->leftJoin('v.user','u')

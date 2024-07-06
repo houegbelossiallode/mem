@@ -20,8 +20,7 @@
             <tr>
                 
                 <th>Designation</th>
-                <th>Quantite</th>
-                <th>Prix</th>
+                <th>Cout</th>
                 <th>action1</th>
                 <th>action2</th>
             </tr>
@@ -31,8 +30,7 @@
             <tr>
                 
                 <td>{{ depense_vivre.designation }}</td>
-                <td>{{ depense_vivre.quantite }}</td>
-                <td>{{ depense_vivre.prix }}</td>
+                <td>{{ depense_vivre.cout }}</td>
                 <td>
                     <a href="{{ path('app_depense_vivre_edit', {'id': depense_vivre.id}) }}"><i class="bi bi-pencil text-success ml-5"></i></a>
                 </td>

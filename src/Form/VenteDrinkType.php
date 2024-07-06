@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 class VenteDrinkType extends AbstractType
 {
@@ -38,7 +39,11 @@ class VenteDrinkType extends AbstractType
             ])
             ->add('date',DateType::class,[
                 'widget' => 'single_text',
-                'label'=> 'Date' 
+                'label'=> 'Date',
+                'constraints' => [
+                    new LessThanOrEqual('today'),
+                    
+                ],
             ])
             ->add('mode_paiement',ChoiceType::class,[
                 'label'=> 'Mode de paiement',

@@ -1,0 +1,13 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Edit Calibre{% endblock %}
+
+{% block body %}
+    <h1>Edit Calibre</h1>
+
+    {{ include('calibre/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_calibre_index') }}">back to list</a>
+
+    {{ include('calibre/_delete_form.html.twig') }}
+{% endblock %}

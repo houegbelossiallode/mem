@@ -41,7 +41,7 @@ class DepenseVivreRepository extends ServiceEntityRepository
         {
             $now = new \DateTime();
             $qb = $this->createQueryBuilder('d')
-                ->select('SUM(d.prix)  AS total')
+                ->select('SUM(d.cout)  AS total')
                 ->andWhere('d.date =:date')
                 ->setParameter('date', $now->format('Y-m-d'))
                 ->getQuery()
@@ -55,7 +55,7 @@ class DepenseVivreRepository extends ServiceEntityRepository
    {
       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
        return $this->createQueryBuilder('d')
-        ->select(' d.designation','d.quantite','d.prix')
+        ->select(' d.designation','d.quantite','d.cout')
         ->Where('d.date =:date')
         ->setParameter('date', $date->format('Y-m-d')) 
         ->getQuery()
@@ -68,7 +68,7 @@ class DepenseVivreRepository extends ServiceEntityRepository
    {
       // $dateObj = \DateTime::createFromFormat('Y-m-d',$date);
        return $this->createQueryBuilder('d')
-           ->select(' d.designation','d.quantite','d.prix')
+           ->select(' d.designation','d.quantite','d.cout')
            ->Where('d.date BETWEEN :date1 AND :date2')
            ->setParameter('date1', $date1->format('Y-m-d')) 
            ->setParameter('date2', $date2->format('Y-m-d')) 

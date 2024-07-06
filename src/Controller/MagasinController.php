@@ -36,7 +36,7 @@ class MagasinController extends AbstractController
        $to = $user->getEmail();
        $subject = 'Listes des boissons à réapprovisionner ';
        $email = (new TemplatedEmail())
-       ->from(new Address('houegbelossiallode@gmail.com', 'Administratrice'))
+       ->from(new Address('houegbelossiallode@gmail.com', 'LES DÉLICES DU COIN'))
        ->to($to)
        ->subject($subject)
        ->htmlTemplate('magasin/email.html.twig')

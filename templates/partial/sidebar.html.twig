@@ -11,13 +11,14 @@
     </a>
   </li><!-- End Dashboard Nav -->
 
+  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
       <i class="bi bi-menu-button-wide"></i><span>Boisson</span><i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
-    {% if is_granted('ROLE_ADMIN')%}
+   
     <li>
       <a href="{{path('app_boisson_index')}}">
         <i class="bi bi-circle"></i><span>Boisson</span>
@@ -26,7 +27,7 @@
     {% endif %}
 
 
-    {% if is_granted('ROLE_MAGASIN')%}
+    {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
     <li>
       <a href="{{path('app_depense_appro_index')}}">
         <i class="bi bi-circle"></i><span>Depense Approvisionnement</span>
@@ -41,7 +42,7 @@
      {% endif %}
 
 
-     {% if is_granted('ROLE_RESTO') or is_granted('ROLE_ADMIN') %}
+     {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
     <li>
       <a href="{{path('app_vente_drink_index')}}">
         <i class="bi bi-circle"></i><span>Vente Boisson</span>
@@ -59,7 +60,7 @@
     {% endif %}
 
 
-    {% if is_granted('ROLE_MAGASIN')%}
+    {% if is_granted('ROLE_USER') %}
     <li>
       <a href="{{path('app_magasin_index')}}">
         <i class="bi bi-circle"></i><span>Magasin</span>
@@ -77,7 +78,7 @@
 
 
 
-  {% if is_granted('ROLE_RESTO') or is_granted('ROLE_ADMIN') %}
+  {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
       <i class="bi bi-journal-text"></i><span>Vivre</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -96,60 +97,112 @@
     </li>
     {% endif %}
 
-    {% if is_granted('ROLE_ADMIN')%}
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')  %}
     <li>
       <a href="{{path('app_vivre_index')}}">
         <i class="bi bi-circle"></i><span>Vivre</span>
       </a>
     </li>
     
-    <li>
-      <a href="{{path('app_repas_index')}}">
-        <i class="bi bi-circle"></i><span>Repas</span>
-      </a>
-    </li>
+   
 
-    <li>
-      <a href="{{path('app_proteine_index')}}">
-        <i class="bi bi-circle"></i><span>Protéines</span>
-      </a>
-    </li>
+
 
   {% endif %}
 
 
-  {% if is_granted('ROLE_RESTO') or is_granted('ROLE_ADMIN') %}
+  {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
     <li>
       <a href="{{path('app_depense_vivre_index')}}">
         <i class="bi bi-circle"></i><span>Dépense Vivre</span>
       </a>
     </li>
 
-    <li>
-      <a href="{{path('app_vente_drink_historique')}}">
-        <i class="bi bi-circle"></i><span>Historiques des ventes boissons annuler</span>
-      </a>
-    </li>
-
-
-    <li>
-      <a href="{{path('app_vente_repas_historique')}}">
-        <i class="bi bi-circle"></i><span>Historiques des ventes repas annuler</span>
-      </a>
-    </li>
-
-{% endif %}
-
   </ul>
   </li><!-- End Forms Nav -->
+{% endif %}
 
-  
-  
-  
 
-  
 
-  
+  <li class="nav-item">
+  <a class="nav-link collapsed" data-bs-target="#historiques-nav" data-bs-toggle="collapse" href="#">
+    <i class="bi bi-menu-button-wide"></i><span>Historiques</span><i class="bi bi-chevron-down ms-auto"></i>
+  </a>
+  <ul id="historiques-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+ 
+  <li>
+    <a href="{{path('app_vente_drink_historique')}}">
+      <i class="bi bi-circle"></i><span>Historiques des ventes boissons annuler</span>
+    </a>
+  </li>
+
+  <li>
+    <a href="{{path('app_vente_repas_historique')}}">
+      <i class="bi bi-circle"></i><span>Historiques des ventes repas annuler</span>
+    </a>
+  </li>
+
+  </ul>
+</li><!-- End Components Nav -->
+
+
+
+
+{% if is_granted('ROLE_ADMIN') %}
+<li class="nav-item">
+  <a class="nav-link collapsed" data-bs-target="#ajout-nav" data-bs-toggle="collapse" href="#">
+    <i class="bi bi-menu-button-wide"></i><span>Ajouter</span><i class="bi bi-chevron-down ms-auto"></i>
+  </a>
+  <ul id="ajout-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+ 
+  <li>
+    <a href="{{path('app_repas_index')}}">
+      <i class="bi bi-circle"></i><span>Repas</span>
+    </a>
+  </li>
+
+  <li>
+    <a href="{{path('app_proteine_index')}}">
+      <i class="bi bi-circle"></i><span>Protéines</span>
+    </a>
+  </li>
+
+  <li>
+    <a href="{{path('app_calibre_index')}}">
+      <i class="bi bi-circle"></i><span>Ajout prix proteine</span>
+    </a>
+  </li>
+
+  <li>
+    <a href="{{path('app_calibre_repas_index')}}">
+      <i class="bi bi-circle"></i><span>Ajout prix accompagnement</span>
+    </a>
+  </li>
+
+  </ul>
+</li><!-- End Components Nav -->
+
+
+
+<li class="nav-item">
+  <a class="nav-link collapsed" data-bs-target="#users-nav" data-bs-toggle="collapse" href="#">
+    <i class="bi bi-menu-button-wide"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
+  </a>
+  <ul id="users-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+ 
+  <li>
+    <a href="{{path('app_users')}}">
+      <i class="bi bi-circle"></i><span>Listes des Utilisateurs</span>
+    </a>
+  </li>
+
+  </ul>
+</li><!-- End Components Nav -->
+
+{% endif %}
 
 </ul>
 

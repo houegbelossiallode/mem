@@ -7,6 +7,9 @@
 
 {{ include('component/search.html.twig') }}
 
+{% for flash_error in app.flashes('success') %}
+<div class="alert alert-success" role="alert">{{ flash_error }}</div>
+{% endfor %}
 
 <section class="section dashboard ">
       <div class="row">

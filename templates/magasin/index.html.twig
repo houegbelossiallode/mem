@@ -6,8 +6,11 @@
   
                         {% if app.request.method == 'GET' %}
                             {% if magasin |length > 0 %}
+                            <strong><h3 class="text text-danger">Vous aviez atteint la limite du seuil de stock,  
+                            veiller réapprovisionner</strong></h3>
                             <marquee  direction="right">
                             <h4 class="alert alert-danger">
+                            
                             {% for donnee in magasin %}
                             {{ donnee.designation}}
                             {% endfor %}
@@ -53,7 +56,7 @@
                 <td>
                     <form action="{{ path('add_quantite', {id : magasin.id})}}" method="POST">
                      <div>
-                       <input type="text" name="ajout" id="ajout" class="form-control" placeholder="Ajout quantité">  
+                       <input type="text" name="ajout" id="ajout" class="form-control" placeholder="Ajout quantité" pattern="[0-9]+" title="Saisissez uniquement des chiffres ">  
                            </div>
                        <button type="submit" class="btn btn-sm btn-outline-primary">Ajouter</button>
                    </form>
@@ -62,7 +65,7 @@
                    <td>
                     <form action="{{ path('drop_quantite', {id : magasin.id})}}" method="POST">
                      <div>
-                       <input type="text" name="dimunier" id="drop" class="form-control" placeholder="Quantité Sortie">  
+                       <input type="text" name="dimunier" id="drop" class="form-control" placeholder="Quantité Sortie" pattern="[0-9]+" title="Saisissez uniquement des chiffres">  
                            </div>
                        <button type="submit" class="btn btn-sm btn-outline-primary">sortir</button>
                    </form>

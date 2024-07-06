@@ -42,8 +42,8 @@ class CongelateurRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->select('c.qte_stock','b.Seuil','b.type','b.designation')
             ->Join('c.boisson','b')
-            ->Where('c.qte_stock <= b.Seuil')
-           // ->setParameter('b.Seuil', 0)
+            ->Where('c.qte_stock =:seuil')
+            ->setParameter('seuil', 0)
             ->getQuery()
             ->getResult()
         ;

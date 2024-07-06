@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 class DepenseVivreType extends AbstractType
 {
@@ -19,15 +20,17 @@ class DepenseVivreType extends AbstractType
             ->add('designation',TextType::class,[
                 'attr' => array('class'=> 'text-uppercase'),
             ])
-            ->add('quantite',NumberType::class,[
-                'invalid_message' => 'Saisissez des chiffers uniquement',
-            ])
-            ->add('prix',NumberType::class,[
+            
+            ->add('cout',NumberType::class,[
                 'invalid_message' => 'Saisissez des chiffers uniquement',
             ])
             ->add('date',DateType::class,[
                 'widget' => 'single_text',
-                'label'=> 'Date' 
+                'label'=> 'Date',
+                'constraints' => [
+                    new LessThanOrEqual('today'),
+                    
+                ], 
             ])
             ->add('valider',SubmitType::class)
         ;

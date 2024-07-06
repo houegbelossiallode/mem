@@ -1,0 +1,47 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}CalibreRepas index{% endblock %}
+{% block pagetitle %}Prix Accompagnement{% endblock %}
+{% block body %}
+    
+<div class="container-fluid" >
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+<div class="card-body table-responsive">
+<div class="container" >
+
+     <div class="row">
+    <table class="table table-bordered table-striped table-highlight"> 
+<a href="{{ path('app_calibre_repas_new') }}" class="btn btn-success mb-3">Nouveau prix<i class="bi bi-plus"></i></a>
+        <thead>
+            <tr>
+                <th>Accompagnement</th>
+                <th>Prix</th>
+                <th>action 1</th>
+                <th>action 2</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for calibre_repa in calibre_repas %}
+            <tr>
+                <td>{{ calibre_repa.repas.accompagnement }}</td>
+                <td>{{ calibre_repa.prix }}</td>
+                    <td>
+                    <a href="{{ path('app_calibre_repas_edit', {'id': calibre_repa.id}) }}" class="btn btn-sm btn-outline-success" >MODIFIER</a>
+                    </td>
+                
+                   
+                    <td>
+                    <a href="{{ path('app_calibre_repas_delete', {'id': calibre_repa.id}) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Etes-vous sûr de vouloir exécuter cette action')">RETIRER</a>
+                    </td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

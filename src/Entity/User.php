@@ -37,14 +37,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\OneToMany(targetEntity: DepenseAppro::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: DepenseAppro::class, mappedBy: 'user',orphanRemoval: true, cascade: ['persist'])]
     private Collection $depenseAppros;
 
-    #[ORM\OneToMany(targetEntity: VenteRepas::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: VenteRepas::class, mappedBy: 'user',orphanRemoval: true, cascade: ['persist'])]
     private Collection $venteRepas;
 
-    #[ORM\OneToMany(targetEntity: VenteDrink::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: VenteDrink::class, mappedBy: 'user',orphanRemoval: true, cascade: ['persist'])]
     private Collection $venteDrinks;
+
+    #[ORM\Column(length: 255)]
+    private ?string $prenom = null;
 
     public function __construct()
     {
@@ -233,6 +236,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $venteDrink->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): static
+    {
+        $this->prenom = $prenom;
 
         return $this;
     }

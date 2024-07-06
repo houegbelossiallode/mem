@@ -26,14 +26,13 @@ class DepenseVivre
     #[ORM\Column(length: 255)]
     private ?string $designation = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $quantite = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $prix = null;
     
     #[ORM\Column(type: Types::DATETIME_MUTABLE,options:['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeInterface $date = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $cout = null;
 
     public function __construct()
     {
@@ -57,30 +56,6 @@ class DepenseVivre
         return $this;
     }
 
-    public function getQuantite(): ?string
-    {
-        return $this->quantite;
-    }
-
-    public function setQuantite(string $quantite): static
-    {
-        $this->quantite = $quantite;
-
-        return $this;
-    }
-
-    public function getPrix(): ?string
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(string $prix): static
-    {
-        $this->prix = $prix;
-
-        return $this;
-    }
-
 
     public function getDate(): ?\DateTimeInterface
     {
@@ -90,6 +65,18 @@ class DepenseVivre
     public function setDate(\DateTimeInterface $date): static
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getCout(): ?string
+    {
+        return $this->cout;
+    }
+
+    public function setCout(string $cout): static
+    {
+        $this->cout = $cout;
 
         return $this;
     }

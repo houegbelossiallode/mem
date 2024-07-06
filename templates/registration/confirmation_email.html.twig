@@ -1,13 +1,12 @@
 <h1>Bravo  vôtre compte a été créé avec succès</h1>
-
-  
-
 <p>
     Veuillez cliquez sur ce lien pour confirmer vôtre adresse mail: <br><br>
     <a href="{{ signedUrl|raw }}">Confirmez mon Email</a>.
     Ce lien expirera dans une  {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
 </p>
-
+ <h3>Voici vos accès</h3>
+<p>Veuillez utiliser ce mot de passe pour vous connecter à vôtre compte : {{mdp}}
+</p>
 <p>
     Cordialement Administratrice
 </p>

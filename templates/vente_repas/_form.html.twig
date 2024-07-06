@@ -12,17 +12,93 @@
 
 <div class="col-6">{{ form_row(form.repas) }}</div>
 <div class="col-6">{{ form_row(form.proteine) }}</div>
+
 </div>
 
 <div class="row">
+<div class="col-6">{{ form_row(form.qte) }}</div>
+<div class="col-6">{{ form_row(form.qte_vendue) }}</div>
 
-<div class="col-6">{{ form_row(form.prix_vente) }}</div>
+
+</div>
+
+<div class="row">
+<div class="col-6">{{ form_row(form.prix_vente_accompagnement) }}</div>
+<div class="col-6">{{ form_row(form.prix_vente_proteine) }}</div>
+</div>
+
+<div class="row">
+<div class="col-6">{{ form_row(form.mode_paiement) }}</div>
 <div class="col-6">{{ form_row(form.date) }}</div>
 </div>
 
-<div class="row">
 
-<div class="col-12">{{ form_row(form.qte_vendue) }}</div>
-
-</div>
 {{ form_end(form) }}
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.repas_select').addEventListener('change', function() {
+        const qte = document.querySelector('.repas');
+        if (this.value !== '') {
+            qte.style.display = 'block';
+        } else {
+            qte.style.display = 'none';
+        }
+    });
+});
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.proteine_select').addEventListener('change', function() {
+        const inputForArticle = document.querySelector('.proteine');
+        
+        if (this.value !== '') {
+            inputForArticle.style.display = 'block';
+        } else {
+            inputForArticle.style.display = 'none';
+        }
+    });
+});
+
+
+//document.addEventListener('DOMContentLoaded', function() {
+//  document.querySelector('.proteine_select').addEventListener('change', function() {
+//      const proteine_calibre = document.querySelector('.calibre_select');
+//      if (this.value !== '') {
+//        proteine_calibre.disabled = false;
+//      } else {
+//        proteine_calibre.disabled = true;
+//      }
+//  });
+//});
+
+
+
+ // Votre script JavaScript ici
+ $(document).ready(function() {
+  $('.proteine_select').change(function() {
+      var selectedProteine = $(this).val();
+      if (selectedProteine) {
+          $('.calibre_select').prop('disabled', false);
+      } else {
+          $('.calibre_select').prop('disabled', true);
+      }
+  });
+});
+
+
+ // Votre script JavaScript ici
+ $(document).ready(function() {
+  $('.repas_select').change(function() {
+      var selectedProteine = $(this).val();
+      if (selectedProteine) {
+          $('.accompagnement_select').prop('disabled', false);
+      } else {
+          $('.accompagnement_select').prop('disabled', true);
+      }
+  });
+});
+
+
+
+</script>

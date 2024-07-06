@@ -2,13 +2,15 @@
 
   <p>
      
-      <h3 class="alert alert-danger">Listes des boissons à réapprovisionner</h3>
       
-      <h4 class="alert alert-danger">
+      
+       <h4 class="alert alert-danger">
+       <h3>vous aviez atteint la limite du seuil de stock, 
+        veiller réapprovisionner </h3>
        {% for donnee in magasin %}
        {{ donnee.designation}}
        {% endfor %}
-      </h4>
+       </h4>
                             
   </p>
   
